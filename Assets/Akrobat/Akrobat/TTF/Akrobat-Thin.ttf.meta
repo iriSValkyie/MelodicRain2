@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: ce2688a9f68539145ad8a217fa142d37
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Akrobat
+  fontNames:
+  - Akrobat
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 58cd6f909073fa845908666102ea428d, type: 3}
+  - {fileID: 12800000, guid: 909cc8a17708d6644bc99108eb5419e1, type: 3}
+  - {fileID: 12800000, guid: cba3d24255cc8ea45bff2f90cef76160, type: 3}
+  - {fileID: 12800000, guid: 30fef39289a1469498265b095ed9b952, type: 3}
+  - {fileID: 12800000, guid: be8047d222edc304185cfac712623ade, type: 3}
+  - {fileID: 12800000, guid: b5800205a91e2a74e82fd6914956e9bd, type: 3}
+  - {fileID: 12800000, guid: aaf7f777dce7fae43bd03ee2a4bd2823, type: 3}
+  - {fileID: 12800000, guid: 46e3ae39926d0d449a8f209bbd5c5944, type: 3}
+  - {fileID: 12800000, guid: f9944e7a5c17ea241a6b868d5d60c827, type: 3}
+  - {fileID: 12800000, guid: dca28b9add467d640b2352e50a185aab, type: 3}
+  - {fileID: 12800000, guid: 216c1e9ae29ddc24b9d3f442bfd9bb94, type: 3}
+  - {fileID: 12800000, guid: 8ca4483e8a5c3c449ac56996e25de0be, type: 3}
+  - {fileID: 12800000, guid: 717514cefad4a42428e6cfc08058554d, type: 3}
+  - {fileID: 12800000, guid: 2b24f16fbff0dd5458790ad4879c21ee, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
