@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 public class Fumen
 {
+
 
 
     public string name;
@@ -17,22 +18,5 @@ public class Fumen
 
     public Notes[] notes;
 
-    
+    public Music musicInfo;
 }
-
-public class Notes
-{
-
-    public int num;
-
-    public int block;
-
-
-    public int LPB;
-
-
-    public int type;
-}
-
-
-

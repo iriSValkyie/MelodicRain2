@@ -9,10 +9,10 @@ public class Music
     public AudioClip MusicData;//音楽ファイル
 
     //難易度別の譜面ファイル
-    public TextAsset NotesFile_easy;
-    public TextAsset NotesFile_normal;
-    public TextAsset NotesFile_hard;
-    public TextAsset NotesFile_expart;
+    public string NotesFile_easy;
+    public string NotesFile_normal;
+    public string NotesFile_hard;
+    public string NotesFile_expart;
 
 
     public int BPM;//BPM(手動入力)
@@ -66,10 +66,10 @@ public class Music
 
         MusicData = Resources.Load<AudioClip>(Name);
 
-        NotesFile_easy = Resources.Load<TextAsset>(Name+ "_es");
-        NotesFile_normal = Resources.Load<TextAsset>(Name + "_nor");
-        NotesFile_hard = Resources.Load<TextAsset>(Name + "_har");
-        NotesFile_expart = Resources.Load<TextAsset>(Name + "_ex");
+        NotesFile_easy = (Name+ "_es");
+        NotesFile_normal =(Name + "_nor");
+        NotesFile_hard = (Name + "_har");
+        NotesFile_expart =(Name + "_ex");
 
         BPM = bpm;
 

@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GameManager
+  - InactivePos
+  - Notes
+  - LongNotes
+  - Lane0
+  - Lane1
+  - Lane2
+  - Lane3
   layers:
   - Default
   - TransparentFX

@@ -575,14 +575,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 103018174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80cd01f240efe8946b7ff6aca0b6118d, type: 3}
+  m_Script: {fileID: 11500000, guid: b1c2d1ca18616ae45943522fae5f294c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OpenPos: {x: -354, y: -12}
   ClosePos: {x: 354, y: -12}
   easing: 0.1
-  GetKey: o
-  pulltype: 1
+  GetKey: tab
+  pulltype: 0
 --- !u!1 &106629541
 GameObject:
   m_ObjectHideFlags: 0
