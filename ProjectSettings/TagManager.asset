@@ -12,6 +12,16 @@ TagManager:
   - Lane1
   - Lane2
   - Lane3
+  - Jacket
+  - Stats
+  - Score
+  - Combo
+  - Title
+  - Artist
+  - BPM
+  - ScoreArtist
+  - DifficultToggle
+  - BackGroundJacket
   layers:
   - Default
   - TransparentFX

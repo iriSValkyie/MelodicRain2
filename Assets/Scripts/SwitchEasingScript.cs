@@ -18,10 +18,10 @@ public class SwitchEasingScript : MonoBehaviour
     [SerializeField] Vector2 ClosePos;
 
 
-    [SerializeField] float easing = 0.1f;//いーじんぐ速度
+    [SerializeField] float easing ;//いーじんぐ速度
     [SerializeField] string GetKey;//入力キー 
 
-    [SerializeField] string GetKey2;//入力キー２
+    [SerializeField] string GetKey2;//入力キー２(必要ない場合は入力キーと同じキーを必ず入れてください)
     RectTransform rectTransform;
     Vector2 diff;
     Vector2 v;
@@ -59,6 +59,7 @@ public class SwitchEasingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log(Input.GetKey(GetKey));
         switch (pulltype)
         {
             case PullType.Hold:
@@ -120,12 +121,12 @@ public class SwitchEasingScript : MonoBehaviour
 
 
 
+    }
 
 
 
 
-
-        void CoolDown()
+        public void CoolDown()
         {
             if (Input.GetKeyDown(GetKey) || Input.GetKeyDown(GetKey2))
             {
@@ -149,10 +150,10 @@ public class SwitchEasingScript : MonoBehaviour
             }
 
         }
-        void Hold()
+       public void Hold()
         {
 
-            if (Input.GetKeyDown(GetKey) || Input.GetKeyDown(GetKey2))
+            if (Input.GetKey(GetKey) || Input.GetKey(GetKey2))
             {
                 isOpened = true;
 
@@ -169,7 +170,7 @@ public class SwitchEasingScript : MonoBehaviour
 
         }
 
-        void Toggle()
+       public void Toggle()
         {
 
             if (Input.GetKeyDown(GetKey) || Input.GetKeyDown(GetKey2))
@@ -178,5 +179,5 @@ public class SwitchEasingScript : MonoBehaviour
 
             }
         }
-    }
+    
 }

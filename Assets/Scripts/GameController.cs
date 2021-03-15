@@ -9,8 +9,8 @@ public class GameController : MonoBehaviour
 {
 
 
-
-    float TimeCount = 0.01f;
+    [SerializeField] LoadingSelectData LoadingSelectData;
+   
 
     public GameObject notePrefab;
     public GameObject LongnotePrefab;
@@ -86,22 +86,10 @@ public class GameController : MonoBehaviour
     float mintiming2;
     float mintiming3;
     float mintiming4;
-    // float tappos = 982.5f;
-
-    float JUST = 0.025f;
-
-    float GREAT = 0.0417f;
+    
+    
 
 
-    float GOOD = 0.0583f;
-
-
-
-    Note notes1;
-
-    Note notes2;
-    Note notes3;
-    Note notes4;
 
     public Text Combo;
 
@@ -112,43 +100,54 @@ public class GameController : MonoBehaviour
     public Score score;
 
 
-    void Awake()
+    void Start()
     {
-
 
 
 
         InitialNotes();
 
-
-
-
-    }
-
-
-    private void Start()
-    {
         mintiming1 = 100;
         mintiming2 = 100;
         mintiming3 = 100;
         mintiming4 = 100;
-        
+
+
+
+        key1 = player.Rane1Key;
+
+        key2 = player.Rane2Key;
+
+        key3 = player.Rane3Key;
+
+        key4 = player.Rane4Key;
+
+
     }
 
+
+   
     void InitialNotes()
     {
         score = new Score();
 
-        string inputString = Resources.Load<TextAsset>("inch_ex").ToString();
 
-        music.clip = Resources.Load<AudioClip>("inch");
+
+
+        string inputString = LoadingSelectData.JsonText;
+
+        Debug.Log(inputString);
+
+        music.clip = LoadingSelectData.music;
 
 
 
         inputJson = JsonUtility.FromJson<Fumen>(inputString);
+        Debug.Log("サンプリング周波数は" + music.clip.frequency + "です");
+        offsetTime = (float)inputJson.offset / (float)music.clip.frequency;
 
-        offsetTime = (float)inputJson.offset / (float)44250;
-
+        
+        
         Debug.Log("Offset:" + inputJson.offset);
         Debug.Log("OffsetTime is" + offsetTime + "(s)!");
         Debug.Log("QueueMusic:" + inputJson.name);
@@ -199,7 +198,7 @@ public class GameController : MonoBehaviour
 
                 case 1:
                     Debug.Log("ロングノーツを検出できませんでした");
-                    NotesChild = Instantiate(notePrefab, new Vector2(CurrentX, 0), Quaternion.identity, notesParent.transform);
+                    NotesChild = Instantiate(notePrefab, new Vector2(CurrentX,0), Quaternion.identity, notesParent.transform);
 
                     switch (inputJson.notes[a].block)
                     {
@@ -234,8 +233,8 @@ public class GameController : MonoBehaviour
                     NoteController.notes = inputJson.notes[a];//Notesクラスの中身をNoteスクリプトに代入
 
                     RectTransform NotesRect = NotesChild.GetComponent<RectTransform>();//インスタンス化したオブジェクトのRectTransformを取得
-                    NotesRect.anchoredPosition = new Vector2(CurrentX, 0);//アンカーポジションを修正
-
+                    NotesRect.anchoredPosition3D = new Vector3(CurrentX, 0,0);//アンカーポジションを修正
+                        
                     Debug.Log("Num:" + inputJson.notes[a].num + "　Block:" + inputJson.notes[a].block + "　A:" + a);
 
                     inputJson.notes[a].timing = (60 / (float)inputJson.BPM) / (float)inputJson.notes[a].LPB * inputJson.notes[a].num + offsetTime;//Noteクラスのタイミングにタップするタイミングを代入（秒）
@@ -319,11 +318,11 @@ public class GameController : MonoBehaviour
                     EndNoteController.notes = inputJson.notes[a].notes[0];//Notesクラスの中身をNoteスクリプトに代入
 
                     RectTransform LongNotesRect2 = LongNotesChild2.GetComponent<RectTransform>();//インスタンス化したオブジェクトのRectTransformを取得
-                    LongNotesRect2.anchoredPosition = new Vector2(CurrentX, 0);//アンカーポジションを修正
+                    LongNotesRect2.anchoredPosition3D = new Vector3(CurrentX,0,0);//アンカーポジションを修正
 
 
                     RectTransform LongNotesRect = LongNotesChild.GetComponent<RectTransform>();//インスタンス化したオブジェクトのRectTransformを取得
-                    LongNotesRect.anchoredPosition = new Vector2(CurrentX, 0);//アンカーポジションを修正
+                    LongNotesRect.anchoredPosition3D = new Vector3(CurrentX,0,0);//アンカーポジションを修正
 
 
                     Debug.Log("Num:" + inputJson.notes[a].num + "　Block:" + inputJson.notes[a].block + "　A:" + a);
@@ -374,13 +373,7 @@ public class GameController : MonoBehaviour
         Debug.Log("譜面準備完了");
 
 
-        key1 = player.Rane1Key;
-
-        key2 = player.Rane2Key;
-
-        key3 = player.Rane3Key;
-
-        key4 = player.Rane4Key;
+       
 
 
     }
@@ -494,318 +487,8 @@ public class GameController : MonoBehaviour
     }
 
 
-    void TapNote(GameObject tmp)
-    {
 
-
-        tmp.gameObject.SetActive(false);
-    }
-
-    void Tap1()
-    {
-
-        if (Input.GetKeyDown(key1))
-        {
-            GameObject[] note = GameObject.FindGameObjectsWithTag("Lane0");
-
-            foreach (GameObject tmp in note)
-            {
-                Note notes = tmp.GetComponent<Note>();
-              //  Debug.Log(nowtime);
-                float timing = notes.notes.timing + CoolDownTime;
-                float notetiming = Mathf.Abs(timing - nowtime);
-
-                // Debug.Log("NoteTiming" + notetiming);
-
-                if (notetiming < mintiming1)
-                {
-                    mintiming1 = notetiming;
-                    notes1 = notes;
-
-                    //Debug.Log("mintimingの中身を変更");
-                }
-
-
-            }
-
-
-            //Debug.Log("最速" + mintiming1);
-
-            if (mintiming1 < JUST)
-            {
-
-
-                Debug.Log("Lane0 is Just");
-                combo++;
-                Combo.text = combo.ToString();
-                score.Just++;
-                notes1.isTap = true;
-                // TapNote(notes1.gameObject);
-            }
-            else if (mintiming1 > JUST && mintiming1 < GREAT)
-            {
-
-                Debug.Log("Lane0 is Great");
-                combo++;
-                Combo.text = combo.ToString();
-                score.Great++;
-                notes1.isTap = true;
-                //  TapNote(notes1.gameObject);
-
-            }
-            else if (mintiming1 > GREAT && mintiming1 < GOOD)
-            {
-
-                Debug.Log("Lane0 is Good");
-                combo = 0;
-                Combo.text = combo.ToString();
-                score.Good++;
-                notes1.isTap = true;
-                // TapNote(notes1.gameObject);
-            }
-            else
-            {
-                Debug.Log("Lane0 is BAD");
-                combo = 0;
-                Combo.text = combo.ToString();
-                notes1.isTap = true;
-                score.BAD++;
-                // notes1.TapNote();
-            }
-
-
-        }
-    }
-    void Tap2()
-    {
-
-        if (Input.GetKeyDown(key2))
-        {
-            GameObject[] note2 = GameObject.FindGameObjectsWithTag("Lane1");
-
-            foreach (GameObject tmp in note2)
-            {
-                Note notes = tmp.GetComponent<Note>();
-                float timing = notes.notes.timing + CoolDownTime;
-             //   Debug.Log(nowtime);
-                float notetiming = Mathf.Abs(timing - nowtime);
-
-                if (notetiming < mintiming2)
-                {
-
-                    mintiming2 = notetiming;
-                    notes2 = notes;
-                }
-
-            }
-            // Debug.Log("最速" + mintiming2);
-            if (mintiming2 < JUST)
-            {
-
-
-                Debug.Log("Lane1 is Just");
-
-                combo++;
-                Combo.text = combo.ToString();
-
-                score.Just++;
-                notes2.isTap = true;
-                // TapNote(notes2.gameObject);
-
-            }
-            else if (mintiming2 > JUST && mintiming2 < GREAT)
-            {
-
-                Debug.Log("Lane1 is Great");
-
-                combo++;
-                Combo.text = combo.ToString();
-                score.Great++;
-                notes2.isTap = true;
-                // TapNote(notes2.gameObject);
-
-            }
-            else if (mintiming2 > GREAT && mintiming2 < GOOD)
-            {
-
-
-                Debug.Log("Lane1 is Good");
-                combo = 0;
-                Combo.text = combo.ToString();
-                score.Good++;
-                notes2.isTap = true;
-                //  TapNote(notes2.gameObject);
-
-            }
-            else
-            {
-
-
-                Debug.Log("Lane1 is BAD");
-
-                combo = 0;
-                Combo.text = combo.ToString();
-                notes2.isTap = true;
-                score.BAD++;
-                //   notes2.TapNote();
-
-            }
-
-
-        }
-    }
-    void Tap3()
-    {
-        if (Input.GetKeyDown(key3))
-        {
-            GameObject[] note3 = GameObject.FindGameObjectsWithTag("Lane2");
-
-            foreach (GameObject tmp in note3)
-            {
-                Note notes = tmp.GetComponent<Note>();
-                float timing = notes.notes.timing + CoolDownTime;
-            //    Debug.Log(nowtime);
-                float notetiming = Mathf.Abs(timing - nowtime);
-
-                if (notetiming < mintiming3)
-                {
-
-                    mintiming3 = notetiming;
-                    notes3 = notes;
-                }
-
-
-            }
-            // Debug.Log("最速" + mintiming3);
-            if (mintiming3 < JUST)
-            {
-
-
-                Debug.Log("Lane2 is Just");
-                combo++;
-                Combo.text = combo.ToString();
-                score.Just++;
-                notes3.isTap = true;
-                // TapNote(notes3.gameObject);
-
-            }
-            else if (mintiming3 > JUST && mintiming3 < GREAT)
-            {
-
-                Debug.Log("Lane2 is Great");
-
-                combo++;
-                Combo.text = combo.ToString();
-                score.Great++;
-                notes3.isTap = true;
-                // TapNote(notes3.gameObject);
-            }
-            else if (mintiming3 > GREAT && mintiming3 < GOOD)
-            {
-
-
-                Debug.Log("Lane2 is Good");
-                combo = 0;
-                Combo.text = combo.ToString();
-                score.Good++;
-                notes3.isTap = true;
-                // TapNote(notes3.gameObject);
-            }
-            else
-            {
-                Debug.Log("Lane2 is BAD");
-
-                combo = 0;
-                Combo.text = combo.ToString();
-                score.BAD++;
-                notes3.isTap = true;
-                // notes3.TapNote();
-            }
-
-        }
-
-    }
-    void Tap4() 
-    {
-        if (Input.GetKeyDown(key4))
-          {
-           GameObject[] note4 = GameObject.FindGameObjectsWithTag("Lane3");
-
-           foreach (GameObject tmp in note4)
-            {
-               Note notes = tmp.GetComponent<Note>();
-             //   Debug.Log(nowtime);
-                float timing  = notes.notes.timing + CoolDownTime;
-
-             float notetiming = Mathf.Abs(nowtime - timing);
-
-                if(notetiming < mintiming4)
-                {
-
-
-                    mintiming4 = notetiming;
-
-                    notes4 = notes;
-                }
-                 
-           }
-
-           // Debug.Log("最速" + mintiming4);
-
-            if (mintiming4 < JUST)
-            {
-
-
-                Debug.Log("Lane3 is Just");
-                combo++;
-                Combo.text = combo.ToString();
-                score.Just++;
-                notes4.isTap = true;
-               // TapNote(notes4.gameObject);
-            }
-            else if (mintiming4 > JUST && mintiming4 < GREAT)
-            {
-
-                Debug.Log("Lane3 is Great");
-
-                combo++;
-                Combo.text = combo.ToString();
-                score.Great++;
-                notes4.isTap = true;
-              //  TapNote(notes4.gameObject);
-            }
-            else if (mintiming4 > GREAT && mintiming4 < GOOD)
-            {
-
-                Debug.Log("Lane3 is Good");
-
-                combo = 0;
-                Combo.text = combo.ToString();
-                score.Good++;
-                notes4.isTap = true;
-               // TapNote(notes4.gameObject);
-            }
-            else
-            {
-
-                Debug.Log("Lane3 is BAD");
-                combo = 0;
-                Combo.text = combo.ToString();
-                notes4.isTap = true;
-                score.BAD++;
-              //  notes4.TapNote();
-            }
-
-
-
-        }
-
-
-
-
-
-    }
-
+ 
     
 }
 

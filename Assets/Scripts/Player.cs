@@ -9,9 +9,12 @@ public class Player : MonoBehaviour
 {
 
     /// <summary>
-    /// プレイヤーの操作やプレイヤーのオプションの情報の補完場所
+    /// プレイヤーの操作やプレイヤーのオプションの情報の保管場所
     /// </summary>
 
+    //メニュー//
+
+    [SerializeField]GameObject MenuCanvas;
 
     //判定//
 
@@ -25,17 +28,6 @@ public class Player : MonoBehaviour
 
 
 
-/*
-    float tappos = 982.5f;
-
-    float JUST = 0.025f;
-
-    float GREAT = 0.0417f;
-
-
-    float GOOD = 0.0583f;
-
-    */
 
     GameObject MostNearNote1;
     GameObject MostNearNote2;
@@ -59,7 +51,7 @@ public class Player : MonoBehaviour
 
 
     //タップ関連//
-    [SerializeField] AudioSource SE;
+    public AudioSource SE;
     public string Rane1Key;
     public string Rane2Key;
     public string Rane3Key;
@@ -72,6 +64,11 @@ public class Player : MonoBehaviour
     Vector2 Tappos = new Vector2(140,200);
     Vector2 UnTapPos = new Vector2(140, 0);
 
+
+    bool islongtap1;
+    bool islongtap2;
+    bool islongtap3;
+    bool islongtap4;
 
     Vector2 diff1;
     Vector2 diff2;
@@ -99,6 +96,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        MenuCanvas.SetActive(false);
         isTap1 = false;
         isTap2 = false;
         isTap3 = false;
@@ -110,6 +109,9 @@ public class Player : MonoBehaviour
         rane2.sizeDelta = new Vector2(140, 0);
         rane3.sizeDelta = new Vector2(140, 0);
         rane4.sizeDelta = new Vector2(140, 0);
+
+        PlayerSpeed = PlayerPrefs.GetFloat("NoteSpeed", 6);
+        SpeedSlider.value = PlayerSpeed * 2;
         SpeedTxt.text = PlayerSpeed.ToString();
     }
 
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeySE();
+
     }
     void LateUpdate()
     {
@@ -133,12 +136,39 @@ public class Player : MonoBehaviour
         KeyImageEasi3(rane3);
         KeyImageEasi4(rane4);
 
-       
+        OpenMenu();
+        CloseMenu();
         //Debug.Log(diff1);
-       // Debug.Log(isTap1);
+        // Debug.Log(isTap1);
     }
 
+    void OpenMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
 
+            MenuCanvas.SetActive(true);
+            Time.timeScale = 0;
+
+        }
+
+    }
+
+    void CloseMenu()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (MenuCanvas.activeSelf== true)
+            {
+                MenuCanvas.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
+
+
+
+    }
 
     void SpeedChange()
     {
@@ -208,26 +238,32 @@ public class Player : MonoBehaviour
         {
 
             SE.PlayOneShot(SE.clip);
-          //  JudgeLane1();
+          
         }
         if (Input.GetKeyDown(Rane2Key))
         {
 
             SE.PlayOneShot(SE.clip);
-          //  JudgeLane2();
+          
         }
         if (Input.GetKeyDown(Rane3Key))
         {
 
             SE.PlayOneShot(SE.clip);
-          //  JudgeLane3();
+         
         }
         if (Input.GetKeyDown(Rane4Key))
         {
 
             SE.PlayOneShot(SE.clip);
-           // JudgeLane4();
+           
         }
+
+
+
+
+        
+
     }
     void KeyImageEasi1(RectTransform rect)
     {
@@ -430,269 +466,7 @@ public class Player : MonoBehaviour
 
     }
 
-    /*
-
-    void JudgeLane1()
-    {
-        Notes1 = GameObject.FindGameObjectsWithTag("Lane0");
-
-        float Taptiming = jsoncontroller.nowtime;
-
-
-        foreach(GameObject Note in Notes1)
-        {
-
-           
-            if(Mathf.Abs(Note.transform.position.y -tappos) < Mathf.Abs(MostNearNote1.transform.position.y -tappos))
-            {
-
-                MostNearNote1 = Note;
-                Debug.Log("距離が近いものを検出");
-            }
-
-
-
-
-
-
-
-        }
-
-        Note note = MostNearNote1.GetComponent<Note>();
-
-        float taprag = Mathf.Abs(Taptiming - (note.notes.timing + jsoncontroller.CoolDownTime));
-
-        if (taprag < JUST) {
-
-            Debug.Log("JUST");
-
-            combo++;
-            Combo.text = combo.ToString();
-        
-        }else if(taprag >JUST && taprag< GREAT)
-        {
-
-            Debug.Log("GREAT");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if(taprag > GREAT && taprag < GOOD)
-        {
-
-            Debug.Log("GOOD");
-            combo = 0;
-            Combo.text = combo.ToString();
-        }
-        else if(taprag > GOOD)
-        {
-
-
-            Debug.Log("BAD");
-            combo = 0;
-            Combo.text = combo.ToString();
-
-        }
-    }
-
-    void JudgeLane2()
-    {
-
-
-        Notes2 = GameObject.FindGameObjectsWithTag("Lane1");
-
-        float Taptiming = jsoncontroller.nowtime;
-
-
-        foreach (GameObject Note in Notes2)
-        {
-
-
-            if (Mathf.Abs(Note.transform.position.y - tappos) < Mathf.Abs(MostNearNote2.transform.position.y - tappos))
-            {
-
-                MostNearNote2 = Note;
-                Debug.Log("距離が近いものを検出");
-            }
-
-
-
-
-
-
-
-        }
-
-        Note note = MostNearNote2.GetComponent<Note>();
-
-        float taprag = Mathf.Abs(Taptiming - (note.notes.timing + jsoncontroller.CoolDownTime));
-
-        if (taprag < JUST)
-        {
-
-            Debug.Log("JUST");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > JUST && taprag < GREAT)
-        {
-
-            Debug.Log("GREAT");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GREAT && taprag < GOOD)
-        {
-
-            Debug.Log("GOOD");
-            combo = 0;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GOOD)
-        {
-
-
-            Debug.Log("BAD");
-            combo = 0;
-            Combo.text = combo.ToString();
-
-        }
-
-
-    }
-
-    void JudgeLane3()
-    {
-
-        Notes3 = GameObject.FindGameObjectsWithTag("Lane2");
-
-        float Taptiming = jsoncontroller.nowtime;
-
-
-        foreach (GameObject Note in Notes3)
-        {
-
-
-            if (Mathf.Abs(Note.transform.position.y - tappos) < Mathf.Abs(MostNearNote3.transform.position.y - tappos))
-            {
-
-                MostNearNote3 = Note;
-                Debug.Log("距離が近いものを検出");
-            }
-
-
-
-
-
-
-
-        }
-
-        Note note = MostNearNote3.GetComponent<Note>();
-
-        float taprag = Mathf.Abs(Taptiming - (note.notes.timing + jsoncontroller.CoolDownTime));
-
-        if (taprag < JUST)
-        {
-
-            Debug.Log("JUST");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > JUST && taprag < GREAT)
-        {
-
-            Debug.Log("GREAT");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GREAT && taprag < GOOD)
-        {
-
-            Debug.Log("GOOD");
-            combo = 0;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GOOD)
-        {
-
-
-            Debug.Log("BAD");
-            combo = 0;
-            Combo.text = combo.ToString();
-
-        }
-    }
-
-    void JudgeLane4()
-    {
-
-
-        Notes4 = GameObject.FindGameObjectsWithTag("Lane3");
-
-        float Taptiming = jsoncontroller.nowtime;
-
-
-        foreach (GameObject Note in Notes4)
-        {
-
-
-            if (Mathf.Abs(Note.transform.position.y - tappos) < Mathf.Abs(MostNearNote4.transform.position.y - tappos))
-            {
-
-                MostNearNote4= Note;
-                Debug.Log("距離が近いものを検出");
-            }
-
-
-
-
-
-
-
-        }
-
-        Note note = MostNearNote4.GetComponent<Note>();
-
-        float taprag = Mathf.Abs(Taptiming - (note.notes.timing + jsoncontroller.CoolDownTime));
-
-        if (taprag < JUST)
-        {
-
-            Debug.Log("JUST");
-            combo++;
-            Combo.text = combo.ToString();
-
-        }
-        else if (taprag > JUST && taprag < GREAT)
-        {
-
-            Debug.Log("GREAT");
-            combo++;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GREAT && taprag < GOOD)
-        {
-
-            Debug.Log("GOOD");
-            combo = 0;
-            Combo.text = combo.ToString();
-        }
-        else if (taprag > GOOD)
-        {
-
-
-            Debug.Log("BAD");
-            combo = 0;
-            Combo.text = combo.ToString();
-
-
-        }
-
-
-
-
-    }
-    */
+   
 }
 
 

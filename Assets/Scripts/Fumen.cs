@@ -18,5 +18,5 @@ public class Fumen
 
     public Notes[] notes;
 
-    public Music musicInfo;
+   
 }

@@ -14,14 +14,15 @@ public class Note : MonoBehaviour
 
 
     public float TapTime;//ノーツが動き初めてからタップするまでの時間
-
+    float oldTapTime;
     [SerializeField] float firetiming;//ノーツが動き出す時間
-
+    float oldfiretiming;
     GameObject GameManager;
 
 
-    
+    [SerializeField] Judge judge;
 
+    
 
     [SerializeField] GameController JsonCnotroller;//譜面を生成しタイマーを再生するスクリプト
 
@@ -29,6 +30,11 @@ public class Note : MonoBehaviour
    
 
     public float UserSpeed;//プレイヤーが設定した数値をTapTimeの時間を短くするために変換した数値
+
+
+    float oldUserSpeed;
+
+
 
     public Notes notes;//ノーツのデータ
 
@@ -40,7 +46,7 @@ public class Note : MonoBehaviour
     RectTransform pos;//ノーツの位置
    [SerializeField] float speed;//譜面の移動時間とタップする位置を計算したもの
 
-   
+    float oldspeed;
 
     [SerializeField] Player player;//プレイヤースクリプト
 
@@ -56,12 +62,19 @@ public class Note : MonoBehaviour
 
         player = GameManager.GetComponent<Player>();
 
-
+        judge = GameManager.GetComponent<Judge>();
 
         UserSpeed = player.PlayerSpeed;
 
+        oldUserSpeed = UserSpeed;
 
-       // InvokeRepeating("CheckSpeed", 0, 0.3f);
+
+        TapTime = (15.5f - UserSpeed)/10;//15.5 = UserSpeedのMaxの値 画面で移動する時間
+        oldTapTime = TapTime;
+
+
+        Debug.Log("TapTime =" + TapTime + "S");
+       
        
        
         isfire = false;
@@ -70,13 +83,17 @@ public class Note : MonoBehaviour
         JsonCnotroller = GameManager.GetComponent<GameController>();
         
 
-      pos= this.gameObject.GetComponent<RectTransform>();
+        pos= this.gameObject.GetComponent<RectTransform>();
 
         TapTiming = JsonCnotroller.CoolDownTime + notes.timing;//スタートするタイミングから譜面が再生される
 
         firetiming = TapTiming - TapTime;//発射される時間を タップする実際の時間からノーツが動く時間を引き求める
+        oldfiretiming = firetiming;
 
         speed = TapPos / TapTime;
+        oldspeed = speed;
+
+
        // Debug.Log(notes.num +"番のノーツの速度は" + speed + "です");
 
 
@@ -87,28 +104,17 @@ public class Note : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-     
-    }
-
-     void Update()
-    {
-
         if (JsonCnotroller.nowtime >= firetiming)
         {
             isfire = true;
             Move();
         }
+    }
 
+     void Update()
+    {
 
-        if (pos.anchoredPosition.y <= InactivePos )
-        {
-            isfire = false;
-
-            JsonCnotroller.combo = 0;
-            JsonCnotroller.Combo.text = 0.ToString();
-
-
-        }
+        
         if (isTap)
         {
 
@@ -116,11 +122,47 @@ public class Note : MonoBehaviour
             this.gameObject.SetActive(false);
         }
 
+        if (pos.anchoredPosition.y <= InactivePos )
+        {
+            isfire = false;
+
+
+            NoteDestroy();
+
+        }
+       
+
+    }
+
+
+    private void LateUpdate()
+    {
+        
+        if(oldUserSpeed != player.PlayerSpeed)
+        {   
+            UserSpeed = player.PlayerSpeed;
+            
+            TapTime = (15.5f - UserSpeed)/10;
+
+            firetiming = TapTiming - TapTime;
+
+            speed = TapPos / TapTime;
+
+            oldUserSpeed = UserSpeed;
+
+            
+            
+
+        }
+        
+       
     }
 
 
 
-     void Move()
+
+
+    void Move()
     {
          
         pos.anchoredPosition -= new Vector2(0, speed  * Time.deltaTime);
@@ -135,11 +177,12 @@ public class Note : MonoBehaviour
         {
             JsonCnotroller.combo = 0;
             JsonCnotroller.Combo.text = 0.ToString();
-
+            judge.ResetAlpha();
+            judge.bad.SetAlpha(1);
             isBad = true;
         }
-        Debug.Log("オブジェクト削除");
-        Destroy(gameObject);
+        //Debug.Log("オブジェクト削除");
+        //Destroy(gameObject);
 
 
     }

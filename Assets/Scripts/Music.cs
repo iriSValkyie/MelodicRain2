@@ -15,6 +15,9 @@ public class Music
     public string NotesFile_expart;
 
 
+    public string FilePath;
+
+
     public int BPM;//BPM(手動入力)
 
     public Dif Difficulty;//難易度(enumで選択可能)
@@ -45,7 +48,8 @@ public class Music
     public bool AllParfect_hard;
     public bool AllParfect_expart;
 
- 
+
+    
 
     public enum Dif
     {
@@ -63,8 +67,8 @@ public class Music
     {
         Name = name;
 
-
-        MusicData = Resources.Load<AudioClip>(Name);
+        
+        
 
         NotesFile_easy = (Name+ "_es");
         NotesFile_normal =(Name + "_nor");
@@ -77,7 +81,7 @@ public class Music
 
         Level = level;
 
-        Jacket = Resources.Load<Texture2D>(Name);
+        
 
         Score_easy = 0;
         Score_normal = 0;
@@ -152,9 +156,21 @@ public class Music
 
     }
 
-   
 
+    public void AddJacket(Texture2D texture)
+    {
+
+        Jacket = texture;
+
+        Debug.Log(texture.name);
+
+    }
+
+   
+    
 
 
 }
+
+
 

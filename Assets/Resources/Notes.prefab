@@ -88,8 +88,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TapTiming: 0
-  TapTime: 0.6
+  TapTime: 1.5
   firetiming: 0
+  judge: {fileID: 0}
   JsonCnotroller: {fileID: 0}
   UserSpeed: 0
   notes:
@@ -101,5 +102,6 @@ MonoBehaviour:
     notes: []
     NotesPrefab: {fileID: 0}
   isfire: 0
+  isTap: 0
   speed: 0
   player: {fileID: 0}
