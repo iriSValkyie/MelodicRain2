@@ -9,9 +9,7 @@ public class MusicDataBase : MonoBehaviour
 
     public int Bpm;
 
-    public bool isAP;
-
-    public bool isFC;
+  
 
     public int Score_easy;
     public int Score_normal;
@@ -22,6 +20,17 @@ public class MusicDataBase : MonoBehaviour
     public int Combo_normal;
     public int Combo_hard;
     public int Combo_expart;
+
+
+    public bool FC_easy;
+    public bool FC_normal;
+    public bool FC_hard;
+    public bool FC_expart;
+
+    public bool AJ_easy;
+    public bool AJ_normal;
+    public bool AJ_hard;
+    public bool AJ_expart;
 
     public string Path;
 
@@ -34,9 +43,7 @@ public class MusicDataBase : MonoBehaviour
     public Texture2D Texture;
 
 
-    [SerializeField] Sprite AP;
 
-    [SerializeField] Sprite FC;
 
     [SerializeField] TextMeshProUGUI Scoretxt;
 
@@ -125,38 +132,7 @@ public class MusicDataBase : MonoBehaviour
 
             BPM.text = "BPM:" + Bpm.ToString();
 
-            if (isFC)
-            {
-                if (isAP)
-                {
-
-
-                    MusicStats.sprite = AP;
-
-                    Debug.Log("AP達成");
-
-                }
-                {
-
-
-                    MusicStats.sprite = FC;
-
-                    Debug.Log("FC達成");
-
-                }
-
-
-
-
-
-
-            }
-            else
-            {
-
-                Debug.Log("FC,AP未達成です");
-            }
-
+        
 
             PlayAudio();
 
@@ -200,9 +176,25 @@ public class MusicDataBase : MonoBehaviour
                     {
 
 
-                        Scoretxt.text = Score_easy.ToString("N3");
+                        Scoretxt.text = Score_easy.ToString("N0");
 
                         Combotxt.text = Combo_easy.ToString();
+
+                        if (FC_easy)
+                        {
+
+                            if (AJ_easy)
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-AllParfect");
+
+                            }
+                            else
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-FullCombo");
+                            }
+
+                        }
+                        
                     }
                     else
                     {
@@ -220,9 +212,24 @@ public class MusicDataBase : MonoBehaviour
 
                     if (Score_normal != 0)
                     {
-                        Scoretxt.text = Score_normal.ToString("N3");
+                        Scoretxt.text = Score_normal.ToString("N0");
 
                         Combotxt.text = Combo_normal.ToString();
+
+                        if (FC_normal)
+                        {
+
+                            if (AJ_normal)
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-AllParfect");
+
+                            }
+                            else
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-FullCombo");
+                            }
+
+                        }
 
                     }
                     else
@@ -241,9 +248,23 @@ public class MusicDataBase : MonoBehaviour
                 case "hard":
                     if (Score_hard != 0)
                     {
-                        Scoretxt.text = Score_hard.ToString("N3");
+                        Scoretxt.text = Score_hard.ToString("N0");
 
                         Combotxt.text = Combo_hard.ToString();
+                        if (FC_hard)
+                        {
+
+                            if (AJ_hard)
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-AllParfect");
+
+                            }
+                            else
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-FullCombo");
+                            }
+
+                        }
                     }
                     else
                     {
@@ -262,9 +283,24 @@ public class MusicDataBase : MonoBehaviour
                 case "expart":
                     if (Score_expart != 0)
                     {
-                        Scoretxt.text = Score_expart.ToString("N3");
+                        Scoretxt.text = Score_expart.ToString("N0");
 
                         Combotxt.text = Combo_expart.ToString();
+
+                        if (FC_expart)
+                        {
+
+                            if (AJ_expart)
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-AllParfect");
+
+                            }
+                            else
+                            {
+                                MusicStats.sprite = Resources.Load<Sprite>("MusicSelect-FullCombo");
+                            }
+
+                        }
                     }
                     else
                     {
@@ -310,5 +346,158 @@ public class MusicDataBase : MonoBehaviour
 
        Combo_expart = PlayerPrefs.GetInt(Name + "_expart_BestCombo", 0);
 
+       switch(PlayerPrefs.GetString("easyAllJust",null))
+        {
+            case "true":
+
+                AJ_easy = true;
+
+                break;
+
+
+
+            case "false":
+
+                AJ_easy = false;
+
+
+                break;
+
+        }
+
+
+        switch (PlayerPrefs.GetString("normalAllJust", null))
+        {
+            case "true":
+
+                AJ_normal = true;
+
+                break;
+
+
+
+            case "false":
+
+                AJ_normal = false;
+
+
+                break;
+
+        }
+
+        switch (PlayerPrefs.GetString("hardAllJust", null))
+        {
+            case "true":
+
+                AJ_hard = true;
+
+                break;
+
+
+
+            case "false":
+
+                AJ_hard = false;
+
+
+                break;
+
+        }
+        switch (PlayerPrefs.GetString("expartAllJust", null))
+        {
+            case "true":
+
+                AJ_expart = true;
+
+                break;
+
+
+
+            case "false":
+
+
+                AJ_expart = false;
+
+                break;
+
+        }
+        switch (PlayerPrefs.GetString("easyFullCombo", null))
+        {
+            case "true":
+
+                FC_easy = true;
+
+                break;
+
+
+
+            case "false":
+
+
+                FC_easy = false;
+
+                break;
+
+        }
+        switch (PlayerPrefs.GetString("normalFullCombo", null))
+        {
+            case "true":
+
+                FC_normal = true;
+
+                break;
+
+
+
+            case "false":
+
+
+                FC_normal = false;
+
+                break;
+
+        }
+
+        switch (PlayerPrefs.GetString("hardFullCombo", null))
+        {
+            case "true":
+
+                FC_hard = true;
+
+                break;
+
+
+
+            case "false":
+
+
+                FC_hard = false;
+
+                break;
+
+        }
+        switch (PlayerPrefs.GetString("expartFullCombo", null))
+        {
+            case "true":
+
+                FC_expart = true;
+
+                break;
+
+
+
+            case "false":
+
+
+                FC_expart = false;
+
+                break;
+
+        }
+
     }
+
+
+
+    
 }

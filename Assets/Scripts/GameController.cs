@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 
 public class GameController : MonoBehaviour
 {
 
+    [SerializeField] Judge judge;
+
+    [SerializeField] TransitionResultScene transitionResultScene;
 
     [SerializeField] LoadingSelectData LoadingSelectData;
    
@@ -42,9 +46,14 @@ public class GameController : MonoBehaviour
     bool isstart;
 
 
+
+
     bool isHumenFire;
 
+    bool isnextscene;
+    
 
+    bool isStop;
     public float nowtime;
 
 
@@ -59,16 +68,17 @@ public class GameController : MonoBehaviour
     [SerializeField] List<float> NotesPrefTiming;
     [SerializeField] List<float> LongNotesPrefTiming;
     [SerializeField] AudioSource music;
+    AudioClip Songfile;
+
 
     [SerializeField] List<float> NotesPrefTapTiming;
     [SerializeField] List<float> LongNotesPrefTapTiming;
 
-    [SerializeField] Text debugTimetxt;
-
+   
     [SerializeField] Fumen inputJson;
     GameObject NotesChild;
 
-
+    [SerializeField] int NotesNum;
 
     [SerializeField] Player player;
 
@@ -91,7 +101,7 @@ public class GameController : MonoBehaviour
 
 
 
-    public Text Combo;
+   
 
     public int combo;
 
@@ -100,9 +110,30 @@ public class GameController : MonoBehaviour
     public Score score;
 
 
+    
+
+    public int AllJustScore = 1000000;
+    public int AllGreatScore = 900000;
+    public int AllGoodScore = 700000;
+    
+
+
+  
+
+
+    [Header("デバッグ用")]
+
+
+    [SerializeField] bool isDebug;
+
+    [SerializeField] Text debugTimetxt;
+
+
+
+    [SerializeField] Text FPS;
     void Start()
     {
-
+        
 
 
         InitialNotes();
@@ -122,7 +153,7 @@ public class GameController : MonoBehaviour
 
         key4 = player.Rane4Key;
 
-
+        isnextscene =true;
     }
 
 
@@ -131,18 +162,34 @@ public class GameController : MonoBehaviour
     {
         score = new Score();
 
+        if (isDebug)
+        {
 
+            debugTimetxt.color=new Color(1, 1, 1, 1);
+            FPS.color = new Color(1, 1, 1, 1);
+
+        }
+        else
+        {
+            debugTimetxt.color = new Color(1, 1, 1, 0);
+            FPS.color = new Color(1, 1, 1, 0);
+
+
+
+        }
 
 
         string inputString = LoadingSelectData.JsonText;
 
         Debug.Log(inputString);
 
-        music.clip = LoadingSelectData.music;
 
 
+      Songfile =  LoadingSelectData.music;
 
-        inputJson = JsonUtility.FromJson<Fumen>(inputString);
+        music.clip = Songfile;
+
+      inputJson = JsonUtility.FromJson<Fumen>(inputString);
         Debug.Log("サンプリング周波数は" + music.clip.frequency + "です");
         offsetTime = (float)inputJson.offset / (float)music.clip.frequency;
 
@@ -153,7 +200,7 @@ public class GameController : MonoBehaviour
         Debug.Log("QueueMusic:" + inputJson.name);
 
         Debug.Log("Notes quantity is" + inputJson.notes.Length + "Notes");
-
+           
 
         for (int a = 0; a < inputJson.notes.Length; a++)
         {
@@ -356,17 +403,29 @@ public class GameController : MonoBehaviour
 
 
 
-
-
                     break;
 
 
             }
 
 
-
-
+           
         }
+
+        NotesNum = EndNotesPref.Count + NotesPref.Count;
+
+        judge.JustScore = AllJustScore / NotesNum;
+
+        judge.GreatScore = AllGreatScore / NotesNum;
+
+        judge.GoodScore = AllGoodScore / NotesNum;
+
+
+
+        PlayerPrefs.SetInt("AllCombo", NotesNum);
+        PlayerPrefs.Save();
+
+     
 
 
 
@@ -393,19 +452,21 @@ public class GameController : MonoBehaviour
         ActiveLongNote();
 
 
-        if (isHumenFire)
-        {
-            /*    
-            Tap1();
-            Tap2();
-            Tap3();
-            Tap4();
+        
 
-            */
-        }
+
+
+
+
     }
 
+    private void LateUpdate()
+    {
 
+        
+       
+    }
+   
 
     void OnStart()
     {
@@ -414,7 +475,7 @@ public class GameController : MonoBehaviour
         {
 
             isHumenFire = true;
-            if (nowtime > 5)
+            if (nowtime > CoolDownTime)
             {
                 isstart = false;
                 isPlay = true;
@@ -432,7 +493,7 @@ public class GameController : MonoBehaviour
             music.Play();
 
             isPlay = false;
-
+            transitionResultScene.isPlaying = true;
         }
 
 
@@ -461,6 +522,7 @@ public class GameController : MonoBehaviour
             NotesPref[setactive].gameObject.SetActive(true);
             setactive++;
         }
+        
 
     }
 
@@ -472,6 +534,7 @@ public class GameController : MonoBehaviour
 
             setactiveLong++;
         }
+        
 
     }
 
@@ -486,10 +549,10 @@ public class GameController : MonoBehaviour
 
     }
 
+   
 
 
- 
-    
+
 }
 
 

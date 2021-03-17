@@ -19,7 +19,14 @@ public class Judge : MonoBehaviour
 
    [SerializeField] Text Combo;
 
-    int combo;
+    [SerializeField]int combo;
+
+    public int Maxcombo;
+
+    [Header("Score")]
+
+  [SerializeField] Text Scoretxt;
+
 
     Note notes1 = new Note();
 
@@ -60,11 +67,19 @@ public class Judge : MonoBehaviour
 
 
 
-    int nowFrameRate;
+   public int nowFrameRate;
 
-    float oneframe;
+  public  float oneframe;
 
+   public int JustScore;
 
+   public int GreatScore;
+
+   public int GoodScore;
+
+    
+
+  public  int Score;
 
     float JUST;
 
@@ -99,9 +114,11 @@ public class Judge : MonoBehaviour
     CanvasRenderer OldJudge;
 
 
+  
     // Start is called before the first frame update
     void Start()
     {
+
         nowFrameRate = Application.targetFrameRate;
 
         oneframe = 1 / (float)nowFrameRate;
@@ -139,6 +156,13 @@ public class Judge : MonoBehaviour
         }
 
         ResetAlpha();
+
+
+        
+
+        
+
+        
     }
 
     public void ResetAlpha()
@@ -152,32 +176,62 @@ public class Judge : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Tap1();
-        Tap2();
-        Tap3();
-        Tap4();
+        
+            Tap1();
+           
+      
+            Tap2();
+            
+       
+            Tap3();
+         
+        
+            Tap4();
+         
 
-        LongUnTap1();
-        LongUnTap2();
-        LongUnTap3();
-        LongUnTap4();
-
+       
+            LongUnTap1();
+         
+        
+            LongUnTap2();
+      
+      
+            LongUnTap3();
+          
+        
+            LongUnTap4();
+          
         LongTap1();
         LongTap2();
         LongTap3();
         LongTap4();
         // LongUntap1();
+        Scoretxt.text = Score.ToString("N0");
+
         
+    }
+
+    private void LateUpdate()
+    {
+        if(combo > Maxcombo)
+        {
+
+            Maxcombo = combo;
+
+
+
+        }
 
     }
 
     void Tap1()
     {
 
-        if (Input.GetKeyDown(tapkey1))
+        if (Input.GetKeyDown(tapkey1) )
         {
+           
             bool quit = false;
             float nowTime = gcSC.nowtime;
             note = GameObject.FindGameObjectsWithTag("Lane0");
@@ -230,9 +284,11 @@ public class Judge : MonoBehaviour
 
 
                 Debug.Log("Lane0 is Just");
-                combo++;
+                combo+=1;
+                Debug.Log(combo);
                 Combo.text = combo.ToString();
-                score.Just++;
+                score.Just+=1;
+                Score += JustScore;
                 notes1.isTap = true;
                 ResetAlpha();
                 Just.SetAlpha(1);
@@ -243,9 +299,11 @@ public class Judge : MonoBehaviour
             {
 
                 Debug.Log("Lane0 is Great");
-                combo++;
+                combo+=1;
+                Debug.Log(combo);
                 Combo.text = combo.ToString();
-                score.Great++;
+                score.Great+=1;
+                Score += GreatScore;
                 notes1.isTap = true;
                 ResetAlpha();
                 great.SetAlpha(1);
@@ -257,8 +315,10 @@ public class Judge : MonoBehaviour
 
                 Debug.Log("Lane0 is Good");
                 combo = 0;
+                Debug.Log(combo);
                 Combo.text = combo.ToString();
-                score.Good++;
+                score.Good+=1;
+                Score += GoodScore;
                 notes1.isTap = true;
                 ResetAlpha();
                 good.SetAlpha(1);
@@ -268,9 +328,11 @@ public class Judge : MonoBehaviour
             {
                 Debug.Log("Lane0 is BAD");
                 combo = 0;
+                Debug.Log(combo);
                 Combo.text = combo.ToString();
                 notes1.isTap = true;
-                score.BAD++;
+                score.Bad+=1;
+                
                 ResetAlpha();
                 bad.SetAlpha(1);
                 // notes1.TapNote();
@@ -283,7 +345,7 @@ public class Judge : MonoBehaviour
             }
 
 
-
+           
         }
 
 
@@ -292,6 +354,8 @@ public class Judge : MonoBehaviour
     {
         if (Input.GetKeyDown(tapkey2))
         {
+            
+            Debug.Log("レーン２タップしています");
             bool quit = false;
             float nowTime = gcSC.nowtime;
             note2 = GameObject.FindGameObjectsWithTag("Lane1");
@@ -341,10 +405,11 @@ public class Judge : MonoBehaviour
 
                 Debug.Log("Lane1 is Just");
 
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-
-                score.Just++;
+                Debug.Log(combo);
+                score.Just+=1;
+                Score += JustScore;
                 notes2.isTap = true;
                 // TapNote(notes2.gameObject);
                 ResetAlpha();
@@ -355,9 +420,12 @@ public class Judge : MonoBehaviour
 
                 Debug.Log("Lane1 is Great");
 
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-                score.Great++;
+
+                Debug.Log(combo);
+                score.Great+=1;
+                Score += GreatScore;
                 notes2.isTap = true;
                 // TapNote(notes2.gameObject);
                 ResetAlpha();
@@ -370,7 +438,9 @@ public class Judge : MonoBehaviour
                 Debug.Log("Lane1 is Good");
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.Good++;
+                Debug.Log(combo);
+                score.Good+=1;
+                Score += GoodScore;
                 notes2.isTap = true;
                 //  TapNote(notes2.gameObject);
                 ResetAlpha();
@@ -384,8 +454,10 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
+                Debug.Log(combo);
                 notes2.isTap = true;
-                score.BAD++;
+                score.Bad+=1;
+                
                 //   notes2.TapNote();
                 ResetAlpha();
                 bad.SetAlpha(1);
@@ -397,6 +469,7 @@ public class Judge : MonoBehaviour
                 Debug.Log("適切なタップ位置まで到達していません");
             }
 
+           
         }
 
 
@@ -406,6 +479,7 @@ public class Judge : MonoBehaviour
     {
         if (Input.GetKeyDown(tapkey3))
         {
+            
             bool quit = false;
             float nowTime = gcSC.nowtime;
             note3 = GameObject.FindGameObjectsWithTag("Lane2");
@@ -454,9 +528,11 @@ public class Judge : MonoBehaviour
 
 
                 Debug.Log("Lane2 is Just");
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-                score.Just++;
+                Debug.Log(combo);
+                score.Just+=1;
+                Score += JustScore;
                 notes3.isTap = true;
                 // TapNote(notes3.gameObject);
                 ResetAlpha();
@@ -467,9 +543,11 @@ public class Judge : MonoBehaviour
 
                 Debug.Log("Lane2 is Great");
 
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-                score.Great++;
+                Debug.Log(combo);
+                score.Great+=1;
+                Score += GreatScore;
                 notes3.isTap = true;
                 // TapNote(notes3.gameObject);
                 ResetAlpha();
@@ -482,7 +560,9 @@ public class Judge : MonoBehaviour
                 Debug.Log("Lane2 is Good");
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.Good++;
+                Debug.Log(combo);
+                score.Good+=1;
+                Score += GoodScore;
                 notes3.isTap = true;
                 // TapNote(notes3.gameObject);
                 ResetAlpha();
@@ -494,7 +574,9 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.BAD++;
+                Debug.Log(combo);
+                score.Bad+=1;
+                
                 notes3.isTap = true;
                 // notes3.TapNote();
                 ResetAlpha();
@@ -507,7 +589,7 @@ public class Judge : MonoBehaviour
                 Debug.Log("適切なタップ位置まで到達していません");
             }
 
-
+           
         }
 
     }
@@ -517,6 +599,7 @@ public class Judge : MonoBehaviour
 
         if (Input.GetKeyDown(tapkey4))
         {
+           
             bool quit = false;
             float nowTime = gcSC.nowtime;
             note4 = GameObject.FindGameObjectsWithTag("Lane3");
@@ -567,26 +650,32 @@ public class Judge : MonoBehaviour
 
 
                 Debug.Log("Lane3 is Just");
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-                score.Just++;
+                Debug.Log(combo);
+                score.Just+=1;
+                Score += JustScore;
                 notes4.isTap = true;
                 // TapNote(notes4.gameObject);
                 ResetAlpha();
                 Just.SetAlpha(1);
+               
             }
             else if (mintiming4 > JUST && mintiming4 < GREAT)
             {
 
                 Debug.Log("Lane3 is Great");
 
-                combo++;
+                combo+=1;
                 Combo.text = combo.ToString();
-                score.Great++;
+                Debug.Log(combo);
+                score.Great+=1;
+                Score += GreatScore;
                 notes4.isTap = true;
                 //  TapNote(notes4.gameObject);
                 ResetAlpha();
                 great.SetAlpha(1);
+               
             }
             else if (mintiming4 > GREAT && mintiming4 < GOOD)
             {
@@ -595,11 +684,14 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.Good++;
+                Debug.Log(combo);
+                score.Good+=1;
+                Score += GoodScore;
                 notes4.isTap = true;
                 // TapNote(notes4.gameObject);
                 ResetAlpha();
                 good.SetAlpha(1);
+               
             }
             else if (GOOD < mintiming4 && BAD > mintiming1)
             {
@@ -607,11 +699,13 @@ public class Judge : MonoBehaviour
                 Debug.Log("Lane3 is BAD");
                 combo = 0;
                 Combo.text = combo.ToString();
+                Debug.Log(combo);
                 notes4.isTap = true;
-                score.BAD++;
+                score.Bad+=1;
                 //  notes4.TapNote();
                 ResetAlpha();
                 bad.SetAlpha(1);
+               
             }
             else
             {
@@ -620,7 +714,7 @@ public class Judge : MonoBehaviour
                 Debug.Log("適切なタップ位置まで到達していません");
             }
 
-
+           
         }
 
 
@@ -645,7 +739,7 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.BAD++;
+                score.Bad+=1;
                 ResetAlpha();
                 bad.SetAlpha(1);
             }
@@ -677,7 +771,7 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.BAD++;
+                score.Bad+=1;
                 ResetAlpha();
                 bad.SetAlpha(1);
             }
@@ -709,7 +803,7 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                score.BAD++;
+                score.Bad+=1;
                 ResetAlpha();
                 bad.SetAlpha(1);
             }
@@ -741,7 +835,7 @@ public class Judge : MonoBehaviour
 
                 combo = 0;
                 Combo.text = combo.ToString();
-                
+                score.Bad+=1;
                 ResetAlpha();
                 bad.SetAlpha(1);
             }
@@ -760,8 +854,9 @@ public class Judge : MonoBehaviour
         if (islongtap1)
         {
 
-            if (Input.GetKeyUp(tapkey1))
+            if (Input.GetKeyUp(tapkey1) )
             {
+               
                 bool quit = false;
                 float nowTime = gcSC.nowtime;
                 note = GameObject.FindGameObjectsWithTag("Lane0");
@@ -813,9 +908,11 @@ public class Judge : MonoBehaviour
 
 
                     Debug.Log("Lane0 is Just");
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Just++;
+                    Debug.Log(combo);
+                    score.Just+=1;
+                    Score += JustScore;
                     notes1.isTap = true;
                     ResetAlpha();
                     Just.SetAlpha(1);
@@ -826,9 +923,11 @@ public class Judge : MonoBehaviour
                 {
 
                     Debug.Log("Lane0 is Great");
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Great++;
+                    Debug.Log(combo);
+                    score.Great+=1;
+                    Score += GreatScore;
                     notes1.isTap = true;
                     ResetAlpha();
                     great.SetAlpha(1);
@@ -841,7 +940,9 @@ public class Judge : MonoBehaviour
                     Debug.Log("Lane0 is Good");
                     combo = 0;
                     Combo.text = combo.ToString();
-                    score.Good++;
+                    Debug.Log(combo);
+                    score.Good+=1;
+                    Score += GoodScore;
                     notes1.isTap = true;
                     ResetAlpha();
                     good.SetAlpha(1);
@@ -852,8 +953,9 @@ public class Judge : MonoBehaviour
                     Debug.Log("Lane0 is BAD");
                     combo = 0;
                     Combo.text = combo.ToString();
+                    Debug.Log(combo);
                     notes1.isTap = true;
-                    score.BAD++;
+                    score.Bad+=1;
                     ResetAlpha();
                     bad.SetAlpha(1);
                     // notes1.TapNote();
@@ -867,6 +969,7 @@ public class Judge : MonoBehaviour
 
                 player.SE.PlayOneShot(player.SE.clip);
                 islongtap1 = false;
+
             }
 
 
@@ -877,7 +980,7 @@ public class Judge : MonoBehaviour
 
 
 
-
+            
 
 
 
@@ -896,6 +999,7 @@ public class Judge : MonoBehaviour
         {
             if (Input.GetKeyUp(tapkey2))
             {
+                
                 bool quit = false;
                 float nowTime = gcSC.nowtime;
                 note2 = GameObject.FindGameObjectsWithTag("Lane1");
@@ -944,10 +1048,11 @@ public class Judge : MonoBehaviour
 
                     Debug.Log("Lane1 is Just");
 
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-
-                    score.Just++;
+                    Debug.Log(combo);
+                    score.Just+=1;
+                    Score += JustScore;
                     notes2.isTap = true;
                     // TapNote(notes2.gameObject);
                     ResetAlpha();
@@ -958,9 +1063,11 @@ public class Judge : MonoBehaviour
 
                     Debug.Log("Lane1 is Great");
 
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Great++;
+                    Debug.Log(combo);
+                    score.Great+=1;
+                    Score += GreatScore;
                     notes2.isTap = true;
                     // TapNote(notes2.gameObject);
                     ResetAlpha();
@@ -973,7 +1080,9 @@ public class Judge : MonoBehaviour
                     Debug.Log("Lane1 is Good");
                     combo = 0;
                     Combo.text = combo.ToString();
-                    score.Good++;
+                    Debug.Log(combo);
+                    score.Good+=1;
+                    Score += GoodScore;
                     notes2.isTap = true;
                     //  TapNote(notes2.gameObject);
                     ResetAlpha();
@@ -987,8 +1096,9 @@ public class Judge : MonoBehaviour
 
                     combo = 0;
                     Combo.text = combo.ToString();
+                    Debug.Log(combo);
                     notes2.isTap = true;
-                    score.BAD++;
+                    score.Bad+=1;
                     //   notes2.TapNote();
                     ResetAlpha();
                     bad.SetAlpha(1);
@@ -1001,9 +1111,10 @@ public class Judge : MonoBehaviour
                 }
 
                 player.SE.PlayOneShot(player.SE.clip);
+
                 islongtap2 = false;
             }
-
+            
 
         }
     }
@@ -1012,8 +1123,9 @@ public class Judge : MonoBehaviour
     {
         if (islongtap3)
         {
-            if (Input.GetKeyUp(tapkey3))
+            if (Input.GetKeyUp(tapkey3) )
             {
+               
                 bool quit = false;
                 float nowTime = gcSC.nowtime;
                 note3 = GameObject.FindGameObjectsWithTag("Lane2");
@@ -1061,9 +1173,11 @@ public class Judge : MonoBehaviour
 
 
                     Debug.Log("Lane2 is Just");
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Just++;
+                    Debug.Log(combo);
+                    score.Just+=1;
+                    Score += JustScore;
                     notes3.isTap = true;
                     // TapNote(notes3.gameObject);
                     ResetAlpha();
@@ -1074,9 +1188,11 @@ public class Judge : MonoBehaviour
 
                     Debug.Log("Lane2 is Great");
 
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Great++;
+                    Debug.Log(combo);
+                    score.Great+=1;
+                    Score += GreatScore;
                     notes3.isTap = true;
                     // TapNote(notes3.gameObject);
                     ResetAlpha();
@@ -1089,7 +1205,9 @@ public class Judge : MonoBehaviour
                     Debug.Log("Lane2 is Good");
                     combo = 0;
                     Combo.text = combo.ToString();
-                    score.Good++;
+                    Debug.Log(combo);
+                    score.Good+=1;
+                    Score += GoodScore;
                     notes3.isTap = true;
                     // TapNote(notes3.gameObject);
                     ResetAlpha();
@@ -1101,7 +1219,8 @@ public class Judge : MonoBehaviour
 
                     combo = 0;
                     Combo.text = combo.ToString();
-                    score.BAD++;
+                    Debug.Log(combo);
+                    score.Bad+=1;
                     notes3.isTap = true;
                     // notes3.TapNote();
                     ResetAlpha();
@@ -1114,8 +1233,10 @@ public class Judge : MonoBehaviour
                     Debug.Log("適切なタップ位置まで到達していません");
                 }
                 player.SE.PlayOneShot(player.SE.clip);
+
                 islongtap3 = false;
             }
+           
         }
     }
 
@@ -1123,8 +1244,9 @@ public class Judge : MonoBehaviour
     {
         if (islongtap4)
         {
-            if (Input.GetKeyUp(tapkey4))
+            if (Input.GetKeyUp(tapkey4) )
             {
+               
                 bool quit = false;
                 float nowTime = gcSC.nowtime;
                 note4 = GameObject.FindGameObjectsWithTag("Lane3");
@@ -1173,9 +1295,11 @@ public class Judge : MonoBehaviour
 
 
                     Debug.Log("Lane3 is Just");
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Just++;
+                    Debug.Log(combo);
+                    score.Just+=1;
+                    Score += JustScore;
                     notes4.isTap = true;
                     // TapNote(notes4.gameObject);
                     ResetAlpha();
@@ -1186,9 +1310,11 @@ public class Judge : MonoBehaviour
 
                     Debug.Log("Lane3 is Great");
 
-                    combo++;
+                    combo+=1;
                     Combo.text = combo.ToString();
-                    score.Great++;
+                    Debug.Log(combo);
+                    score.Great+=1;
+                    Score += GreatScore;
                     notes4.isTap = true;
                     //  TapNote(notes4.gameObject);
                     ResetAlpha();
@@ -1201,7 +1327,9 @@ public class Judge : MonoBehaviour
 
                     combo = 0;
                     Combo.text = combo.ToString();
-                    score.Good++;
+                    Debug.Log(combo);
+                    score.Good+=1;
+                    Score += GoodScore;
                     notes4.isTap = true;
                     // TapNote(notes4.gameObject);
                     ResetAlpha();
@@ -1213,8 +1341,9 @@ public class Judge : MonoBehaviour
                     Debug.Log("Lane3 is BAD");
                     combo = 0;
                     Combo.text = combo.ToString();
+                    Debug.Log(combo);
                     notes4.isTap = true;
-                    score.BAD++;
+                    score.Bad+=1;
                     //  notes4.TapNote();
                     ResetAlpha();
                     bad.SetAlpha(1);
@@ -1226,10 +1355,12 @@ public class Judge : MonoBehaviour
                     Debug.Log("適切なタップ位置まで到達していません");
                 }
                 player.SE.PlayOneShot(player.SE.clip);
+
+
                 islongtap4 = false;
             }
 
-
+           
         }
     }
 }

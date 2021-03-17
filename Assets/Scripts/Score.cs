@@ -14,7 +14,7 @@ public class Score
 
 
 
-    public int BAD =0;
+    public int Bad =0;
 
 
 

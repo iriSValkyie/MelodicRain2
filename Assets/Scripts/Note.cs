@@ -73,7 +73,7 @@ public class Note : MonoBehaviour
         oldTapTime = TapTime;
 
 
-        Debug.Log("TapTime =" + TapTime + "S");
+      //  Debug.Log("TapTime =" + TapTime + "S");
        
        
        
@@ -120,6 +120,7 @@ public class Note : MonoBehaviour
 
 
             this.gameObject.SetActive(false);
+            Destroy(this.gameObject);
         }
 
         if (pos.anchoredPosition.y <= InactivePos )
@@ -175,8 +176,8 @@ public class Note : MonoBehaviour
 
         if (isBad == false)
         {
-            JsonCnotroller.combo = 0;
-            JsonCnotroller.Combo.text = 0.ToString();
+            
+           
             judge.ResetAlpha();
             judge.bad.SetAlpha(1);
             isBad = true;

@@ -139,7 +139,8 @@ public class LoadingSelectData : MonoBehaviour
         {
             Debug.LogError("ジャケットファイルのパスが間違っています、PLayPrefsのキーなどを確認してください");
 
-
+            JacketBackGrond.texture = Resources.Load<Texture2D>("Default");
+            Jacket.texture = Resources.Load<Texture2D>("Default");
 
         }
         /*譜面の取得*/
@@ -211,6 +212,8 @@ public class LoadingSelectData : MonoBehaviour
         Panel.SetActive(false);
 
         animator.SetTrigger("isReady");
+
+        StopCoroutine("FadeIn");
 
     }
 

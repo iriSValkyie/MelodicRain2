@@ -240,6 +240,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66876964}
   m_CullTransparentMesh: 0
+--- !u!1 &83485052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 83485053}
+  - component: {fileID: 83485055}
+  - component: {fileID: 83485054}
+  m_Layer: 5
+  m_Name: FadeOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &83485053
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83485052}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 677582999}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &83485054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83485052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &83485055
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83485052}
+  m_CullTransparentMesh: 0
 --- !u!1 &137265227
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +1040,7 @@ GameObject:
   - component: {fileID: 373242530}
   - component: {fileID: 373242529}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TextTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2179,6 +2253,7 @@ RectTransform:
   - {fileID: 240691785}
   - {fileID: 1423131954}
   - {fileID: 2072845527}
+  - {fileID: 83485053}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2967,8 +3042,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 740.68, y: 287.1}
-  m_SizeDelta: {x: 375.30545, y: 46.51381}
+  m_AnchoredPosition: {x: 740.68, y: 284.65}
+  m_SizeDelta: {x: 375.30545, y: 51.412598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &982161699
 MonoBehaviour:
@@ -3000,9 +3075,9 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: aaaaaaaaaaaaaaa
+  m_Text: 
 --- !u!222 &982161700
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3103,7 +3178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1067468599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3414,6 +3489,7 @@ GameObject:
   - component: {fileID: 1113957615}
   - component: {fileID: 1113957616}
   - component: {fileID: 1113957617}
+  - component: {fileID: 1113957623}
   - component: {fileID: 1113957618}
   - component: {fileID: 1113957619}
   - component: {fileID: 1113957621}
@@ -3463,15 +3539,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1113957613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 657ea8cbe7b2c184eb27aacebe6b09b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f855dca9d83fcf40b7bce1c51b13531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  judge: {fileID: 1113957621}
+  transitionResultScene: {fileID: 1113957623}
   LoadingSelectData: {fileID: 2072845528}
   notePrefab: {fileID: 2694557370208651716, guid: 20cf101502a55fd489da2cfa1a6ef733,
     type: 3}
   LongnotePrefab: {fileID: 6683739279586709546, guid: 16d5e8ad8860c294ba42d83d73a81265,
     type: 3}
-  CoolDownTime: 5
+  CoolDownTime: 3
   notesParent: {fileID: 857637826}
   NoteController: {fileID: 0}
   EndNoteController: {fileID: 0}
@@ -3485,27 +3563,25 @@ MonoBehaviour:
   music: {fileID: 1113957618}
   NotesPrefTapTiming: []
   LongNotesPrefTapTiming: []
-  debugTimetxt: {fileID: 373242529}
   inputJson:
     name: 
     maxBlock: 0
     BPM: 0
     offset: 0
-    notes:
-    - num: 0
-      block: 0
-      LPB: 0
-      type: 0
-      timing: 0
-      notes: []
-      NotesPrefab: {fileID: 0}
+    notes: []
+  NotesNum: 0
   player: {fileID: 1113957619}
   key1: 
   key2: 
   key3: 
   key4: 
-  Combo: {fileID: 620880309}
   combo: 0
+  AllJustScore: 1000000
+  AllGreatScore: 900000
+  AllGoodScore: 700000
+  isDebug: 0
+  debugTimetxt: {fileID: 373242529}
+  FPS: {fileID: 752512341}
 --- !u!114 &1113957617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3754,6 +3830,15 @@ MonoBehaviour:
   gcSC: {fileID: 1113957616}
   player: {fileID: 1113957619}
   Combo: {fileID: 620880309}
+  combo: 0
+  Maxcombo: 0
+  Scoretxt: {fileID: 642234360}
+  nowFrameRate: 0
+  oneframe: 0
+  JustScore: 0
+  GreatScore: 0
+  GoodScore: 0
+  Score: 0
   bad: {fileID: 453299306}
   good: {fileID: 1595601767}
   great: {fileID: 1310825896}
@@ -3776,6 +3861,24 @@ MonoBehaviour:
   laneinitpos: {x: 0, y: 540}
   laneMaxpos: {x: 0, y: -243}
   scrollSpeed: 5
+--- !u!114 &1113957623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113957613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576ad9dc031e59c4b971defc75648388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameController: {fileID: 1113957616}
+  judge: {fileID: 1113957621}
+  audio: {fileID: 1113957618}
+  background: {fileID: 83485054}
+  fadeinTime: 3
+  isPlaying: 0
 --- !u!1 &1253840022
 GameObject:
   m_ObjectHideFlags: 0
