@@ -2,21 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// ノーツの動作
+/// </summary>
 public class Note : MonoBehaviour
 {
 
     const float TapPos= 982.5f;//叩く位置
+
+    [Header("タップ時間")]
 
     [SerializeField] float TapTiming;//タップする実際の秒数
    
    const float InactivePos = -1219f;//ノーツが消える位置
 
 
-
+   
     public float TapTime;//ノーツが動き初めてからタップするまでの時間
-    float oldTapTime;
+
+
+
+    float oldTapTime;//スピード変更前のTapTime
+
+
+    [Header("発火時間")]
     [SerializeField] float firetiming;//ノーツが動き出す時間
+
+
     float oldfiretiming;
+
+
+
+
+    [Header("他スクリプト関連")]
     GameObject GameManager;
 
 
@@ -27,7 +45,7 @@ public class Note : MonoBehaviour
     [SerializeField] GameController JsonCnotroller;//譜面を生成しタイマーを再生するスクリプト
 
 
-   
+    [SerializeField] Player player;//プレイヤースクリプト
 
     public float UserSpeed;//プレイヤーが設定した数値をTapTimeの時間を短くするために変換した数値
 
@@ -39,16 +57,21 @@ public class Note : MonoBehaviour
     public Notes notes;//ノーツのデータ
 
 
-    public bool isfire;//発射されたかどうｋ
+    public bool isfire;//発射されたかどうか
 
-    public bool isTap;
+    public bool isTap;//タップされたかどうか
 
     RectTransform pos;//ノーツの位置
+
+    [Header("スピード関連")]
+
    [SerializeField] float speed;//譜面の移動時間とタップする位置を計算したもの
 
-    float oldspeed;
+    float oldspeed;//スピード変更前のスピード
 
-    [SerializeField] Player player;//プレイヤースクリプト
+
+
+    
 
 
     bool isBad;
@@ -115,7 +138,7 @@ public class Note : MonoBehaviour
     {
 
         
-        if (isTap)
+        if (isTap)// タップされたら
         {
 
 
@@ -123,7 +146,7 @@ public class Note : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (pos.anchoredPosition.y <= InactivePos )
+        if (pos.anchoredPosition.y <= InactivePos )//タップされずに特定の座標を過ぎると
         {
             isfire = false;
 
@@ -139,7 +162,7 @@ public class Note : MonoBehaviour
     private void LateUpdate()
     {
         
-        if(oldUserSpeed != player.PlayerSpeed)
+        if(oldUserSpeed != player.PlayerSpeed)//スピード変更
         {   
             UserSpeed = player.PlayerSpeed;
             
@@ -180,20 +203,17 @@ public class Note : MonoBehaviour
            
             judge.ResetAlpha();
             judge.bad.SetAlpha(1);
+            Destroy(gameObject);
             isBad = true;
         }
         //Debug.Log("オブジェクト削除");
-        //Destroy(gameObject);
+        
 
 
     }
 
 
-   void CheckSpeed()
-    {
-        UserSpeed = player.PlayerSpeed;
-
-    }
+ 
 
 
 

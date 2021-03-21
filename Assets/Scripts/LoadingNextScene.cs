@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// シーンをロードするスクリプト
+/// </summary>
 public class LoadingNextScene : MonoBehaviour
 {
 
-    AsyncOperation async;
+    AsyncOperation async;//非同期動作
 
-    [SerializeField] GameObject LoadCanvas;
+    [SerializeField] GameObject LoadCanvas;//背景画面
 
-    [SerializeField] Slider slider;
+    [SerializeField] Slider slider;//ロードゲージ
     // Start is called before the first frame update
    
 
@@ -24,7 +26,7 @@ public class LoadingNextScene : MonoBehaviour
         StartCoroutine("LoadScene");
     }
 
-    IEnumerator LoadScene()
+    IEnumerator LoadScene()//ロードする
     {
         async = SceneManager.LoadSceneAsync("2Dmusic");
 

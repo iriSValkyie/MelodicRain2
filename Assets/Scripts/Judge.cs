@@ -2,69 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// ノーツをタップした判定処理
+/// </summary>
 public class Judge : MonoBehaviour
 {
-    [Header("ReferenceScript")]
+    [Header("他スクリプト")]
 
     [SerializeField] GameController gcSC;
     [SerializeField] Player player;
 
+
+
+    /*キー*/
     string tapkey1 = "d";
     string tapkey2 = "f";
     string tapkey3 = "h";
     string tapkey4 = "j";
 
-    [Header("ComboText")]
+    [Header("Combo")]
 
    [SerializeField] Text Combo;
 
-    [SerializeField]int combo;
+   [SerializeField]int combo;
 
-    public int Maxcombo;
+    public int Maxcombo;//最大コンボ数
 
     [Header("Score")]
 
-  [SerializeField] Text Scoretxt;
+     [SerializeField] Text Scoretxt;
 
 
+
+    
+    //各レーンで検出された譜面情報
     Note notes1 = new Note();
-
     Note notes2= new Note();
     Note notes3= new Note();
     Note notes4= new Note();
-
-    Note Longnotes1 = new Note();
-    Note Longnotes2 = new Note();
-    Note Longnotes3 = new Note();
-    Note Longnotes4 = new Note();
-
-
+    //レーン上にあるゲームオブジェクト
     GameObject[] note = new GameObject[30];
     GameObject[] note2 = new GameObject[30];
     GameObject[] note3 = new GameObject[30];
     GameObject[] note4 = new GameObject[30];
-    GameObject[] Longnote = new GameObject[30];
-    GameObject[] Longnote2 = new GameObject[30];
-    GameObject[] Longnote3 = new GameObject[30];
-    GameObject[] Longnote4 = new GameObject[30];
 
-    float mintiming1 = 100; //レーン事の最小タイミングのノーツの時間
+    //レーン事の最小タイミングのノーツの時間
+    float mintiming1 = 100; 
     float mintiming2 = 100;
     float mintiming3 = 100;
     float mintiming4 = 100;
-    float longmintiming1 = 100;
-    float longmintiming2 = 100;
-    float longmintiming3 = 100;
-    float longmintiming4 = 100;
 
 
 
+    //長押しし続けていなければいけないか
     bool islongtap1;
     bool islongtap2;
     bool islongtap3;
     bool islongtap4;
-
+    
 
 
    public int nowFrameRate;
@@ -178,7 +173,9 @@ public class Judge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*タップしたレーンにあるすべてのノーツを取得し
+        そのノーツのタップする時間とタップした時間の差が
+        一番小さいノーツと判定を行う*/
             Tap1();
            
       
@@ -228,7 +225,7 @@ public class Judge : MonoBehaviour
 
     void Tap1()
     {
-
+        
         if (Input.GetKeyDown(tapkey1) )
         {
            
@@ -859,7 +856,7 @@ public class Judge : MonoBehaviour
                
                 bool quit = false;
                 float nowTime = gcSC.nowtime;
-                note = GameObject.FindGameObjectsWithTag("Lane0");
+                 note = GameObject.FindGameObjectsWithTag("Lane0");
 
                 mintiming1 = 100;
                 Debug.Log("１タップ");

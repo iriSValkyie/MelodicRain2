@@ -1,25 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// オプションを表示するスクリプト
+/// </summary>
 public class Option : MonoBehaviour
 {
 
     bool isOpened;
-
+    [Header("キーを押したときに表示される位置")]
     [SerializeField] Vector2 OpenPos;
-
+    [Header("非表示の位置")]
     [SerializeField]Vector2 ClosePos;
 
-
-   [SerializeField] float easing = 0.1f;//いーじんぐ速度
-   [SerializeField] string GetKey;//入力キー 
+    [Header("イージング速度")]
+    [SerializeField] float easing = 0.1f;//いーじんぐ速度
+    [Header("入力キー")]
+    [SerializeField] string GetKey;//入力キー 
 
 
     RectTransform rectTransform;
     Vector2 diff;
     Vector2 v;
 
+
+    [Header("動作タイプ")]
     [SerializeField] PullType pulltype;
 
     
@@ -53,9 +58,9 @@ public class Option : MonoBehaviour
                 break;
 
         }
-       
 
 
+        //開いた時の動作
         switch (isOpened)
         {
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -12,37 +12,19 @@ public class Player : MonoBehaviour
     /// プレイヤーの操作やプレイヤーのオプションの情報の保管場所
     /// </summary>
 
-    //メニュー//
-
-    [SerializeField]GameObject MenuCanvas;
-
-    //判定//
-
-    GameObject[] Notes1;
-    GameObject[] Notes2;
-    GameObject[] Notes3;
-    GameObject[] Notes4;
-
-
-    GameController jsoncontroller;
+   
+  
 
 
 
-
-    GameObject MostNearNote1;
-    GameObject MostNearNote2;
-    GameObject MostNearNote3;
-    GameObject MostNearNote4;
-
-
-    int combo;
-
+    [Header("コンボ")]
     [SerializeField] Text Combo;//コンボテキスト
-    //----//
+
 
 
 
     //譜面速度関連//
+    [Header("ノーツスピード")]
     public float PlayerSpeed;
     [SerializeField] Text SpeedTxt;
     [SerializeField] Slider SpeedSlider;
@@ -51,36 +33,39 @@ public class Player : MonoBehaviour
 
 
     //タップ関連//
-    public AudioSource SE;
+
+    public AudioSource SE;//タップ音
+
+    /*タップキー*/
     public string Rane1Key;
     public string Rane2Key;
     public string Rane3Key;
     public string Rane4Key;
+
+
+    /*キーエフェクト1のTransform*/
     [SerializeField] RectTransform rane1;
     [SerializeField] RectTransform rane2;
     [SerializeField] RectTransform rane3;
     [SerializeField] RectTransform rane4;
 
-    Vector2 Tappos = new Vector2(140,200);
-    Vector2 UnTapPos = new Vector2(140, 0);
+
+    Vector2 Tappos = new Vector2(140,200);//キーエフェクト1の開始位置
+    Vector2 UnTapPos = new Vector2(140, 0); //キーエフェクト1の終点位置
 
 
-    bool islongtap1;
-    bool islongtap2;
-    bool islongtap3;
-    bool islongtap4;
 
-    Vector2 diff1;
+    Vector2 diff1; //今の位置から終点の位置までの差
     Vector2 diff2;
     Vector2 diff3;
     Vector2 diff4;
 
-    Vector2 v1;
+    Vector2 v1;//位置フレームあたりの座標増加量
     Vector2 v2;
     Vector2 v3;
     Vector2 v4;
 
-   [SerializeField] float easing = 0.2f;
+   [SerializeField] float easing = 0.2f;//イージング倍増量
 
 
 
@@ -91,13 +76,13 @@ public class Player : MonoBehaviour
 
     //--------------------//
 
-
+    
 
     // Start is called before the first frame update
     void Start()
     {
 
-        MenuCanvas.SetActive(false);
+      
         isTap1 = false;
         isTap2 = false;
         isTap3 = false;
@@ -120,6 +105,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        
+       
+
         KeySE();
 
     }
@@ -136,39 +124,15 @@ public class Player : MonoBehaviour
         KeyImageEasi3(rane3);
         KeyImageEasi4(rane4);
 
-        OpenMenu();
-        CloseMenu();
+
         //Debug.Log(diff1);
         // Debug.Log(isTap1);
     }
 
-    void OpenMenu()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-
-            MenuCanvas.SetActive(true);
-            Time.timeScale = 0;
-
-        }
-
-    }
-
-    void CloseMenu()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (MenuCanvas.activeSelf== true)
-            {
-                MenuCanvas.SetActive(false);
-                Time.timeScale = 1;
-            }
-        }
 
 
+    
 
-    }
 
     void SpeedChange()
     {
@@ -190,7 +154,7 @@ public class Player : MonoBehaviour
 
     void KeyControll()
     {
-
+        //タップしたか判定する
         if (Input.GetKey(Rane1Key))
         {
             isTap1 = true;
@@ -234,6 +198,7 @@ public class Player : MonoBehaviour
 
     void KeySE()
     {
+        //タップ音を鳴らす
         if (Input.GetKeyDown(Rane1Key))
         {
 
@@ -271,7 +236,7 @@ public class Player : MonoBehaviour
         switch (isTap1)
         {
 
-
+            //タップエフェクトの動作
 
             case true:
 

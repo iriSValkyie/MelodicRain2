@@ -4,17 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class ResultManager : MonoBehaviour
-{
+{       
+    [Header("フェードイン/アウト用")]
 
-    [SerializeField] Image backgroundimage;
-
+    [SerializeField] Image backgroundimage; //フェード用のImageComponent
     
 
-    float speed;
+    float time;//フェード残り時間
 
-    [SerializeField] bool isFadein;
-    [SerializeField] bool isFadeOut;
 
+    [SerializeField] bool isFadein;//フェードイン用のbool
+    [SerializeField] bool isFadeOut;//フェードアウト用
+
+
+    [Header("スコア類")]
 
     [SerializeField] int Score;
 
@@ -33,15 +36,26 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] int Combo;
 
+
+    [Header("ベストスコア/コンボ")]
+
     [SerializeField] int BestScore;
 
     [SerializeField] int BestCombo;
-    [SerializeField] string Name;
-
-    [SerializeField] int AllCombo;
 
 
-    [SerializeField] Image FullcomboAllJust;
+    [Header("曲情報")]
+
+
+    [SerializeField] string Name;//曲名
+
+    [SerializeField] int AllCombo;//曲のコンボ数
+
+
+
+    [Header("各Image/Text")]
+
+    [SerializeField] Image FullcomboAllJust;//　fullcombo/AllJustどちらかを満たしていれば画像が表示される
 
     
 
@@ -74,8 +88,23 @@ public class ResultManager : MonoBehaviour
     void Start()
     {
         isFadein = false;
-        speed = 1;
+        time = 1;
 
+        GetScore();
+
+
+        WriteScore();
+
+        isFadein = true;
+
+    }
+
+
+
+
+    void GetScore()
+    {
+        /*--各情報をPlayPrefsで取得する--*/
 
         Just = PlayerPrefs.GetInt("Just", 0);
 
@@ -100,19 +129,22 @@ public class ResultManager : MonoBehaviour
 
         Artisttxt.text = PlayerPrefs.GetString("ArtistName", "???");
 
-        ScoreArtisttxt.text = "ScoreArtist:" +PlayerPrefs.GetString("ScoreArtistName", "???");
+        ScoreArtisttxt.text = "ScoreArtist:" + PlayerPrefs.GetString("ScoreArtistName", "???");
 
 
         BestScore = PlayerPrefs.GetInt(Name + "_" + Difficult + "_BestScore", 0);
 
         BestCombo = PlayerPrefs.GetInt(Name + "_" + Difficult + "_BestCombo", 0);
 
+
+        /*--ベストスコア/コンボを更新する--*/
+
         if (BestScore < Score)
         {
 
 
             BestScoretxt.text = Score.ToString("N0");
-            PlayerPrefs.SetInt(Name + "_" + Difficult + "_BestScore",Score);
+            PlayerPrefs.SetInt(Name + "_" + Difficult + "_BestScore", Score);
             PlayerPrefs.Save();
         }
         else
@@ -124,7 +156,7 @@ public class ResultManager : MonoBehaviour
         }
 
 
-        if(BestCombo < Combo)
+        if (BestCombo < Combo)
         {
 
             PlayerPrefs.SetInt(Name + "_" + Difficult + "_BestCombo", Combo);
@@ -142,29 +174,30 @@ public class ResultManager : MonoBehaviour
         }
 
 
-        if(Combo == AllCombo)
+        if (Combo == AllCombo)
         {
 
-            if(Bad ==0 && Good == 0 && Great ==0)
+            if (Bad == 0 && Good == 0 && Great == 0)
             {
 
 
-                
+
                 Debug.Log("AllJust!!");
 
-                
+
 
                 FullcomboAllJust.sprite = Resources.Load<Sprite>("MusicSelect-AllParfect");
-                PlayerPrefs.SetString(Difficult + "AllJust","true");
+                PlayerPrefs.SetString(Difficult + "AllJust", "true");
                 PlayerPrefs.Save();
 
 
 
-            }else if (Bad == 0 && Good == 0)
+            }
+            else if (Bad == 0 && Good == 0)
             {
                 Debug.Log("FullCombo");
                 FullcomboAllJust.sprite = Resources.Load<Sprite>("MusicSelect-FullCombo");
-                PlayerPrefs.SetString(Difficult+"FullCombo", "true");
+                PlayerPrefs.SetString(Difficult + "FullCombo", "true");
                 PlayerPrefs.Save();
 
 
@@ -184,6 +217,14 @@ public class ResultManager : MonoBehaviour
 
         }
 
+
+
+    }
+
+
+    void WriteScore()
+    {
+
         MaxCombo.text = "MaxCombo    " + Combo.ToString();
 
         Justtxt.text = "JUST    " + Just.ToString();
@@ -197,21 +238,67 @@ public class ResultManager : MonoBehaviour
         Scoretxt.text = Score.ToString("N0");
 
 
-        isFadein = true;
+
+
+
+
+    }
+
+    void Update()
+    {
+        FadeIn();
+
+
+        if (Input.GetKeyDown(KeyCode.Return))//エンターを押すと次のシーンへ進むためフェードアウトする
+        {
+
+            isFadeOut = true;
+
+        }
+
+
+
+        FadeOut();
+
 
     }
 
 
-    void Update()
+    void FadeOut()
     {
+        if (isFadeOut)
+        {
 
+
+            time += Time.deltaTime;
+
+
+
+
+            backgroundimage.color = new Color(0, 0, 0, time);
+
+
+            if (backgroundimage.color.a >= 1)
+            {
+
+
+                SceneManager.LoadScene("SelectMusic");
+            }
+
+        }
+
+
+    }
+
+    void FadeIn()
+    {
         if (isFadein)
         {
-            speed -= Time.deltaTime;
+            time -= Time.deltaTime;
 
 
 
-            backgroundimage.color = new Color(0, 0, 0, speed);
+            backgroundimage.color = new Color(0, 0, 0, time);
 
             if (backgroundimage.color.a <= 0)
             {
@@ -220,33 +307,9 @@ public class ResultManager : MonoBehaviour
             }
 
         }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-
-            isFadeOut = true;
-
-        }
-
-        if (isFadeOut)
-        {
-            
-
-            speed += Time.deltaTime;
 
 
 
-
-            backgroundimage.color = new Color(0, 0, 0, speed);
-
-
-            if(backgroundimage.color.a >= 1)
-            {
-
-
-                SceneManager.LoadScene("SelectMusic");
-            }
-
-        }
     }
 
 

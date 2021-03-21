@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+/// <summary>
+/// リザルトシーンへの遷移、スコア受け取り
+/// </summary>
 public class TransitionResultScene : MonoBehaviour
 {
-
+    [Header("他スクリプト")]
     [SerializeField] GameController gameController;
 
     [SerializeField] Judge judge;
 
-
+    [Header("音楽")]
     [SerializeField] AudioSource audio;
-
+    [Header("フェードアウト")]
     [SerializeField] Image background;
 
 
     [SerializeField] float fadeinTime;
 
+
+
     float speed;
 
-     bool isFadeOut;
+    bool isFadeOut;
 
     public bool isPlaying;
      // Start is called before the first frame update
@@ -40,7 +46,7 @@ public class TransitionResultScene : MonoBehaviour
                 background.color = new Color(0f, 0f, 0f, speed);
             if(background.color.a >= 1)
             {
-                Finish();
+                Finish();//フェードアウトが終わるとPlayPrefsにセーブ後リザルトシーンへ遷移
 
 
             }
@@ -50,7 +56,7 @@ public class TransitionResultScene : MonoBehaviour
     private void LateUpdate()
     {
 
-        if (audio.time == 0 && !audio.isPlaying && isPlaying)
+        if (audio.time == 0 && !audio.isPlaying && isPlaying)//演奏が終了するとリザルトシーンへの遷移のためにフェードアウトを実行
         {
             isFadeOut = true;
 

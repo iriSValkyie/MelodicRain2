@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class DifficultToggle : MonoBehaviour
 {
-
+    [Header("選択中の難易度")]
     public string CurrentDifficulty;
 
-
+    [Header("各トグル")]
     [SerializeField] Toggle easy;
     [SerializeField] Toggle normal;
     [SerializeField] Toggle hard;
@@ -60,7 +60,7 @@ public class DifficultToggle : MonoBehaviour
         }
     }
 
-
+    /*トグルに変更が来るたびにCurrentDiffecultyを変更する*/
     void CheckisOn()
     {
         if (easy.isOn)

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// スコアの数を計算するクラス
+/// </summary>
 public class Score
 {
     public int Just =0;

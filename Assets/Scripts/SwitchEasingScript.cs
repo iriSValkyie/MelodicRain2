@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// uGUIをイージングさせて動かす
+/// </summary>
 public class SwitchEasingScript : MonoBehaviour
 {
     /*---           このスクリプトはuGui専用です   
@@ -12,30 +14,35 @@ public class SwitchEasingScript : MonoBehaviour
                                                                     ----*/
 
     bool isOpened;
-
+    [Header("キーを押したときに表示される位置")]
     [SerializeField] Vector2 OpenPos;
-
+    [Header("非表示の位置")]
     [SerializeField] Vector2 ClosePos;
 
+    [Header("イージング速度")]
+    [SerializeField] float easing ;
+    [Header("入力キー")]
+    [SerializeField] string GetKey;
+    [Header("入力キー2(必要ない場合は入力キーと同じキーを必ず入れてください)")]
+    [SerializeField] string GetKey2;
 
-    [SerializeField] float easing ;//いーじんぐ速度
-    [SerializeField] string GetKey;//入力キー 
 
-    [SerializeField] string GetKey2;//入力キー２(必要ない場合は入力キーと同じキーを必ず入れてください)
     RectTransform rectTransform;
     Vector2 diff;
     Vector2 v;
 
+
+    [Header("動作タイプ")]
     [SerializeField] PullType pulltype;
 
-
+    [Header("無操作時間(動作タイプがCoolDownの時のみ)")]
     [SerializeField] float cooldown; //無操作時間
 
 
     float nowcooldowntime;
 
-    bool isFinCoolDown;
-    public enum PullType
+
+    public enum PullType//動作タイプ
     {
         Hold,
         Toggle,
@@ -48,18 +55,20 @@ public class SwitchEasingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        //初期化
         rectTransform = gameObject.GetComponent<RectTransform>();
 
         isOpened = false;
 
-        isFinCoolDown = false;
+     
         nowcooldowntime = cooldown;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(Input.GetKey(GetKey));
+        //タイプ
         switch (pulltype)
         {
             case PullType.Hold:
@@ -78,7 +87,7 @@ public class SwitchEasingScript : MonoBehaviour
         }
 
 
-
+        //開いた時の動作
         switch (isOpened)
         {
 
@@ -126,7 +135,7 @@ public class SwitchEasingScript : MonoBehaviour
 
 
 
-        public void CoolDown()
+        public void CoolDown()//無操作状態が特定秒数続くと閉じる
         {
             if (Input.GetKeyDown(GetKey) || Input.GetKeyDown(GetKey2))
             {
@@ -150,7 +159,7 @@ public class SwitchEasingScript : MonoBehaviour
             }
 
         }
-       public void Hold()
+       public void Hold()//押し続けてる時間 開く
         {
 
             if (Input.GetKey(GetKey) || Input.GetKey(GetKey2))
@@ -170,7 +179,7 @@ public class SwitchEasingScript : MonoBehaviour
 
         }
 
-       public void Toggle()
+       public void Toggle()//押したら開閉する
         {
 
             if (Input.GetKeyDown(GetKey) || Input.GetKeyDown(GetKey2))

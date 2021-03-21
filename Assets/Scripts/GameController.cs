@@ -8,109 +8,119 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    [Header("他スクリプト")]
 
     [SerializeField] Judge judge;
 
     [SerializeField] TransitionResultScene transitionResultScene;
 
     [SerializeField] LoadingSelectData LoadingSelectData;
-   
+
+    [SerializeField] Player player;
+
+    [Header("ノーツプレハブ")]
 
     public GameObject notePrefab;
     public GameObject LongnotePrefab;
 
+
+    /*各レーン座標*/
     const float lane0X = -203.7f;
     const float lane1X = -68.8f;
     const float lane2X = 68.6f;
     const float lane3X = 204f;
 
-
+    [Header("クールダウン")]
 
     public float CoolDownTime = 4;//曲が始まるまでの空き時間です。譜面が0秒から始まるため空きを付けてます
 
 
-    const float TapDistance = 980.5f; //画面上部のノーツが出てくるとこから叩く場所までの距離
+
+
+   
+
+
+    [Header("ノーツの親オブジェクト")]
 
     [SerializeField] GameObject notesParent;
+
+    [Header("各ノーツの情報")]
+
     [SerializeField] Note NoteController;
-    [SerializeField] Note EndNoteController;
+    [SerializeField] Note EndNoteController;//ロングノーツの終点のノーツ
     [SerializeField] LongNote LongNoteController;
 
-
-
-    float CurrentX;
-
-
-    bool isPlay;
-
-    bool isstart;
-
-
-
-
-    bool isHumenFire;
-
-    bool isnextscene;
     
 
-    bool isStop;
+    float CurrentX; // 各ノーツのレーン座標
+
+
+    bool isPlay; //曲再生用bool
+
+    bool isstart;//演奏を開始するbool
+
+
+
+
+    bool isHumenFire;//演奏時間を計測するbool
+
+    
+    
+
+    
+
+    [Header("演奏時間")]
+
     public float nowtime;
 
 
-    float offsetTime;
 
 
-    int setactive = 0;
-    int setactiveLong = 0;
-    [SerializeField] List<GameObject> NotesPref;
-    [SerializeField] List<GameObject> EndNotesPref;
-    [SerializeField] List<GameObject> LongNotePref;
-    [SerializeField] List<float> NotesPrefTiming;
-    [SerializeField] List<float> LongNotesPrefTiming;
-    [SerializeField] AudioSource music;
+    float offsetTime;//譜面のオフセット(s)
+
+
+    int setactive = 0;//Activeにするノーツの要素数
+    int setactiveLong = 0;//Activeにするロングノーツの要素数
+
+
+    [Header("各リスト")]
+
+    [SerializeField] List<GameObject> NotesPref;//ノーツプレハブ
+    [SerializeField] List<GameObject> EndNotesPref;//ロングノーツの終点のプレハブ
+    [SerializeField] List<GameObject> LongNotePref;//ロングノーツのプレハブ
+    [SerializeField] List<float> NotesPrefTiming;//各ノーツのActiveにするタイミング
+    [SerializeField] List<float> LongNotesPrefTiming;//各ロングノーツのActiveにするタイミング
+
+
+
+    [Header("音楽")]
+
+    public AudioSource music;
     AudioClip Songfile;
 
+    public bool isStopped;
 
-    [SerializeField] List<float> NotesPrefTapTiming;
-    [SerializeField] List<float> LongNotesPrefTapTiming;
+    [Header("タップ時間のリスト")]
 
-   
+    [SerializeField] List<float> NotesPrefTapTiming;//各ノーツのタップする時間
+    [SerializeField] List<float> LongNotesPrefTapTiming;//各ロングノーツのタップする時間
+
+    [Header("譜面")]
     [SerializeField] Fumen inputJson;
-    GameObject NotesChild;
+
+
+    GameObject NotesChild;//生成したノーツ
+
+    [Header("ノーツ数")]
 
     [SerializeField] int NotesNum;
 
-    [SerializeField] Player player;
 
 
 
-    [SerializeField] string key1;
-
-    [SerializeField] string key2;
-
-    [SerializeField] string key3;
-
-    [SerializeField] string key4;
-
-    float mintiming1;
-    float mintiming2;
-    float mintiming3;
-    float mintiming4;
-    
-    
 
 
-
-   
-
-    public int combo;
-
-
-
-    public Score score;
-
-
-    
+    [Header("各スコアの理論値")]
 
     public int AllJustScore = 1000000;
     public int AllGreatScore = 900000;
@@ -124,13 +134,13 @@ public class GameController : MonoBehaviour
     [Header("デバッグ用")]
 
 
-    [SerializeField] bool isDebug;
+    [SerializeField] bool isDebug;//Debug情報を取得するか
 
-    [SerializeField] Text debugTimetxt;
+    [SerializeField] Text debugTimetxt;//演奏時間を表示するテキスト
 
 
 
-    [SerializeField] Text FPS;
+    [SerializeField] Text FPS;//FPS表示テキスト
     void Start()
     {
         
@@ -138,31 +148,17 @@ public class GameController : MonoBehaviour
 
         InitialNotes();
 
-        mintiming1 = 100;
-        mintiming2 = 100;
-        mintiming3 = 100;
-        mintiming4 = 100;
-
-
-
-        key1 = player.Rane1Key;
-
-        key2 = player.Rane2Key;
-
-        key3 = player.Rane3Key;
-
-        key4 = player.Rane4Key;
-
-        isnextscene =true;
+       
+        
     }
 
 
    
     void InitialNotes()
     {
-        score = new Score();
+       
 
-        if (isDebug)
+        if (isDebug)//デバッグモードかを検出する
         {
 
             debugTimetxt.color=new Color(1, 1, 1, 1);
@@ -178,18 +174,19 @@ public class GameController : MonoBehaviour
 
         }
 
+        isStopped = false;
 
-        string inputString = LoadingSelectData.JsonText;
+        string inputString = LoadingSelectData.JsonText;//譜面データを取得
 
         Debug.Log(inputString);
 
 
 
-      Songfile =  LoadingSelectData.music;
+        Songfile =  LoadingSelectData.music;//音楽を取得
 
         music.clip = Songfile;
 
-      inputJson = JsonUtility.FromJson<Fumen>(inputString);
+        inputJson = JsonUtility.FromJson<Fumen>(inputString);
         Debug.Log("サンプリング周波数は" + music.clip.frequency + "です");
         offsetTime = (float)inputJson.offset / (float)music.clip.frequency;
 
@@ -204,7 +201,7 @@ public class GameController : MonoBehaviour
 
         for (int a = 0; a < inputJson.notes.Length; a++)
         {
-            switch (inputJson.notes[a].block)
+            switch (inputJson.notes[a].block)//レーンの検出
             {
                 case 0:
 
@@ -239,8 +236,8 @@ public class GameController : MonoBehaviour
 
             }
 
-            // Debug.Log("JsonIndex:" + a + "=" + CurrentX);
-            switch (inputJson.notes[a].type)
+            
+            switch (inputJson.notes[a].type)//ロングノーツの始点を検出(1.ノーツ2.ロングノーツ)
             {
 
                 case 1:
@@ -316,7 +313,7 @@ public class GameController : MonoBehaviour
 
                     GameObject LongNotesChild2 = Instantiate(notePrefab, new Vector2(CurrentX, 0), Quaternion.identity, notesParent.transform);//ロングノーツ終点をインスタンス化
                     EndNotesPref.Add(LongNotesChild2);//リストに追加
-                    switch (inputJson.notes[a].block)
+                    switch (inputJson.notes[a].block)//レーンの検出
                     {
 
                         case 0:
@@ -353,11 +350,9 @@ public class GameController : MonoBehaviour
 
 
                     LongNote.gameObject.transform.SetParent(LongNotesChild2.gameObject.transform);//終点ノーツの子にロングノーツを
-                                                                                                  //   LongNotesChild.gameObject.transform.SetParent(LongNotesChild2.gameObject.transform);//終点ノーツの子に始点ノーツを
+                                                                                                  
 
-                    //  LongNote.transform.SetParent(notesParent.transform);//始点との親子関係を解消
-                    //int NotesiblingIndex = LongNotesChild.transform.GetSiblingIndex();//始点の順番を変数に代入
-                    //LongNote.transform.SetSiblingIndex(NotesiblingIndex - 1);//始点より上にロングノーツの画像を移動
+                    
 
 
 
@@ -412,8 +407,10 @@ public class GameController : MonoBehaviour
            
         }
 
-        NotesNum = EndNotesPref.Count + NotesPref.Count;
+        NotesNum = EndNotesPref.Count + NotesPref.Count; //合計コンボを計算
 
+
+        /*1ノーツに対してのスコア数を計算*/
         judge.JustScore = AllJustScore / NotesNum;
 
         judge.GreatScore = AllGreatScore / NotesNum;
@@ -422,7 +419,7 @@ public class GameController : MonoBehaviour
 
 
 
-        PlayerPrefs.SetInt("AllCombo", NotesNum);
+        PlayerPrefs.SetInt("AllCombo", NotesNum);//PlayPrefsにセーブ
         PlayerPrefs.Save();
 
      
@@ -437,7 +434,11 @@ public class GameController : MonoBehaviour
 
     }
 
+   
 
+
+
+    
 
     void Update()
     {
@@ -502,7 +503,7 @@ public class GameController : MonoBehaviour
     void Timer()
     {
 
-        if (isHumenFire)
+        if (isHumenFire)//時間計測が開始
         {
 
             nowtime += Time.deltaTime;
@@ -516,9 +517,9 @@ public class GameController : MonoBehaviour
 
     void ActiveNote()
     {
-        if (nowtime >= NotesPrefTiming[setactive])
+        if (nowtime >= NotesPrefTiming[setactive])//activeのタイミングの時間が来たらノーツをActiveする
         {
-
+            
             NotesPref[setactive].gameObject.SetActive(true);
             setactive++;
         }
@@ -528,7 +529,7 @@ public class GameController : MonoBehaviour
 
     void ActiveLongNote()
     {
-        if (nowtime >= LongNotesPrefTiming[setactiveLong])
+        if (nowtime >= LongNotesPrefTiming[setactiveLong])//activeのタイミングの時間が来たらロングノーツをActiveする
         {
             EndNotesPref[setactiveLong].gameObject.SetActive(true);
 
@@ -540,6 +541,8 @@ public class GameController : MonoBehaviour
 
     public void OnClickStartButton()
     {
+
+        //ロードが終わると発火
 
         isstart = true;
 

@@ -3,94 +3,125 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+
+
+/// <summary>
+/// 
+/// 選択した曲のデータロード
+/// 
+/// 
+/// </summary>
 public class LoadingSelectData : MonoBehaviour
 {
+    [Header("フェードイン")]
+
+    [SerializeField] float fadeinTime; //フェード時間
+
+    [SerializeField] Image backgroundimage;
+
+    [SerializeField] GameObject Panel;//フェード用パネル
 
 
-    [SerializeField] float fadeinTime;
 
-    [SerializeField]Image backgroundimage;
 
-    [SerializeField] GameObject Panel;
+    [Header("Readyアニメーション")]
 
     [SerializeField] Animator animator;
-   
 
+
+    [Header("音楽")]
 
     public AudioClip music;
 
 
+    [Header("ファイルパス")]
 
-    [SerializeField] string MusicFilePath;
-    [SerializeField] string LaneCovorFilePath;
+    [SerializeField] string MusicFilePath;//音楽フォルダのパス
+    [SerializeField] string LaneCovorFilePath;//レーンカバーのファイルパス
+
+
+    [Header("曲名")]
 
     [SerializeField] string Name;
+
+
+    [Header("作曲者/譜面制作者")]
 
     [SerializeField] string ArtistName;
 
     [SerializeField] string ScoreArtistName;
 
+
+    [Header("譜面テキスト")]
+
     public string JsonText;
 
-    string Difficult;
+
+
+
+    string Difficult;//難易度
 
     
-    
+    [Header("背景明るさ")]
 
     public  float Brightness;
 
 
-    UnityWebRequest unityWebRequest;
 
-    [Header("外部オブジェクト")]
+
+    UnityWebRequest unityWebRequest;//ローカルファイルを取得するWebRequest
+
+    [Header("外部スクリプト")]
 
 
     [SerializeField] GameObject GameManager;
 
-
-
-
-
-
-    [SerializeField] Image BrightnessImage;
-
-    [SerializeField] RawImage Jacket;
-    [SerializeField] RawImage JacketBackGrond;
-
-    [SerializeField] RawImage LaneCover;
-
-
     [SerializeField] GameController gameController;
-   
 
     [SerializeField] Player player;
 
 
-    [SerializeField] Text TitleTxt;
 
-    [SerializeField] Text ArtistNameTxt;
+    [Header("各コンポーネント")]
 
-    [SerializeField] Text ScoreArtistNameTxt;
+
+    [SerializeField] Image BrightnessImage;//背景明るさを調整するImage
+
+    [SerializeField] RawImage Jacket;//ジャケット
+    [SerializeField] RawImage JacketBackGrond;//背景ジャケット
+
+    [SerializeField] RawImage LaneCover;//レーンカバー
+
+    [SerializeField] Text TitleTxt;//曲名
+
+    [SerializeField] Text ArtistNameTxt;//作曲者名
+
+    [SerializeField] Text ScoreArtistNameTxt;//譜面制作者名
     // Start is called before the first frame update
     IEnumerator Start()
     {
         fadeinTime = 1f * fadeinTime / 10f;
 
-        
 
+        /*--選択した曲の情報とオプションを取得する--*/
+
+
+        /*パスの取得*/
         MusicFilePath = PlayerPrefs.GetString("SongFilePath", null);
         Difficult = PlayerPrefs.GetString("Difficulty", null);
+        /*オプションの取得*/
         LaneCovorFilePath =  PlayerPrefs.GetString("LaneCoverPath", null);
-       
         Brightness = PlayerPrefs.GetFloat("Brightness", 0);
+
+
+        /*曲情報の取得*/
         Name = PlayerPrefs.GetString("Name", null);
         ArtistName = PlayerPrefs.GetString("ArtistName", null);
         ScoreArtistName = PlayerPrefs.GetString("ScoreArtistName", null);
 
 
+        /*代入*/
         BrightnessImage.color = new Color(0, 0, 0, Brightness);
-
-      
 
         TitleTxt.text = Name;
 
@@ -164,7 +195,7 @@ public class LoadingSelectData : MonoBehaviour
             Debug.LogError("譜面ファイルのパスが間違っています、PLayPrefsのキーなどを確認してください");
         }
 
-        GameManager.SetActive(true);
+        GameManager.SetActive(true);//譜面を読み込んだらGameManagerをオンにする
 
         /*レーンカバーの取得*/
         if (System.IO.File.Exists(LaneCovorFilePath.Replace("file://", "")))
@@ -211,23 +242,19 @@ public class LoadingSelectData : MonoBehaviour
 
         Panel.SetActive(false);
 
-        animator.SetTrigger("isReady");
+        animator.SetTrigger("isReady");//readyのアニメーションを再生
 
         StopCoroutine("FadeIn");
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     public void OnStart()
     {
 
 
-        gameController.OnClickStartButton();
+        gameController.OnClickStartButton();//演奏を開始する
 
 
     }

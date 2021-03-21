@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-
-    public int Combo;
-    [SerializeField] Text FrameRatetxt;
+    [Header("フレームレート制限")]
+    
+    [SerializeField] Text FrameRatetxt;//フレームレートテキスト
 
 
 
@@ -18,12 +18,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = 120;//フレームレートを設定
     }
 
     // Update is called once per frame
     void Update()
     {
+        //フレームレートを計算
+
+
         double rate = 1 / Time.deltaTime;
 
 
