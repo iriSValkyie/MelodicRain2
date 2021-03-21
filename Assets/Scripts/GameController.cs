@@ -390,7 +390,7 @@ public class GameController : MonoBehaviour
 
 
                     NotesPref[a].gameObject.SetActive(false);//ノーツを非表示にする
-                    EndNotesPref[EndNotesPref.Count - 1].gameObject.SetActive(false);//終点ノーツを非表示
+                    EndNotesPref[EndNotesPref.Count - 1].gameObject.SetActive(  false);//終点ノーツを非表示
 
 
 
