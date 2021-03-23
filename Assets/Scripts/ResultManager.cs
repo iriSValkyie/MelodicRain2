@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 public class ResultManager : MonoBehaviour
 {       
     [Header("フェードイン/アウト用")]
@@ -84,6 +85,11 @@ public class ResultManager : MonoBehaviour
 
     [SerializeField] Text ScoreArtisttxt;
 
+
+    [SerializeField] RawImage Jacket;
+
+    UnityWebRequest unityWebRequest;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,10 +102,30 @@ public class ResultManager : MonoBehaviour
         WriteScore();
 
         isFadein = true;
-
+        StartCoroutine(GetJacket());
     }
 
+    IEnumerator GetJacket()
+    {
 
+        if (System.IO.File.Exists(Application.streamingAssetsPath +"/"+ Name +"/"+ Name + ".png"))
+        {
+            using (unityWebRequest = UnityWebRequestTexture.GetTexture("file://" + Application.streamingAssetsPath + "/" + Name + "/" + Name + ".png"))
+            {
+                yield return unityWebRequest.SendWebRequest();
+
+
+                Jacket.texture = ((DownloadHandlerTexture)unityWebRequest.downloadHandler).texture;
+
+                
+            }
+
+        }
+
+
+
+
+    }
 
 
     void GetScore()

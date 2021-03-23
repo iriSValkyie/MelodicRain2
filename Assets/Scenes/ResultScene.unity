@@ -385,8 +385,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 542.5, y: -160}
-  m_SizeDelta: {x: 250.8229, y: 65.32898}
+  m_AnchoredPosition: {x: 623.25, y: -160}
+  m_SizeDelta: {x: 412.32785, y: 65.32898}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &287987614
 MonoBehaviour:
@@ -619,8 +619,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 537.8, y: -73}
-  m_SizeDelta: {x: 260.23596, y: 68.69986}
+  m_AnchoredPosition: {x: 618.55, y: -73}
+  m_SizeDelta: {x: 421.73242, y: 68.69986}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &585248900
 MonoBehaviour:
@@ -771,8 +771,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550.93994, y: 14}
-  m_SizeDelta: {x: 233.91406, y: 65.3486}
+  m_AnchoredPosition: {x: 631.7, y: 14}
+  m_SizeDelta: {x: 395.42957, y: 65.3486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &709092467
 MonoBehaviour:
@@ -947,6 +947,7 @@ MonoBehaviour:
   Bad: 0
   Combo: 0
   BestScore: 0
+  BestCombo: 0
   Name: 
   AllCombo: 0
   FullcomboAllJust: {fileID: 1324318286}
@@ -960,6 +961,7 @@ MonoBehaviour:
   Titletxt: {fileID: 191202336}
   Artisttxt: {fileID: 2055630943}
   ScoreArtisttxt: {fileID: 772393313}
+  Jacket: {fileID: 1403511321}
 --- !u!1 &894767962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0001297, y: -43.832}
+  m_AnchoredPosition: {x: 7.5, y: -43.866}
   m_SizeDelta: {x: 1919.9996, y: 992.3362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464253971
@@ -1585,8 +1587,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 553.5, y: -247}
-  m_SizeDelta: {x: 228.63403, y: 59.25647}
+  m_AnchoredPosition: {x: 634.3, y: -247}
+  m_SizeDelta: {x: 390.23096, y: 59.25647}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1514160996
 MonoBehaviour:
