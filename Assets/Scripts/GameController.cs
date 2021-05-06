@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] Player player;
 
+    [SerializeField] GameMenu gameMenu;
+
     [Header("ノーツプレハブ")]
 
     public GameObject notePrefab;
@@ -476,7 +478,7 @@ public class GameController : MonoBehaviour
         {
 
             isHumenFire = true;
-            if (nowtime > CoolDownTime)
+            if (nowtime > CoolDownTime)//譜面が表示されるタイミングと音楽の再生のタイミングを合わせる
             {
                 isstart = false;
                 isPlay = true;
@@ -493,8 +495,12 @@ public class GameController : MonoBehaviour
 
             music.Play();
 
+            
+
             isPlay = false;
             transitionResultScene.isPlaying = true;
+
+            gameMenu.MusicStarted = true;
         }
 
 

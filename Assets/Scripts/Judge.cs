@@ -24,7 +24,7 @@ public class Judge : MonoBehaviour
 
    [SerializeField] Text Combo;
 
-   [SerializeField]int combo;
+    public int combo;
 
     public int Maxcombo;//最大コンボ数
 
@@ -204,7 +204,7 @@ public class Judge : MonoBehaviour
         LongTap2();
         LongTap3();
         LongTap4();
-        // LongUntap1();
+       
         Scoretxt.text = Score.ToString("N0");
 
         

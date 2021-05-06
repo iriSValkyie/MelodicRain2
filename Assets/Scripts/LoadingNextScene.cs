@@ -17,7 +17,7 @@ public class LoadingNextScene : MonoBehaviour
     // Start is called before the first frame update
    
 
-    public void NextScene()
+     public void NextScene()
     {
 
         LoadCanvas.SetActive(true);
@@ -29,6 +29,8 @@ public class LoadingNextScene : MonoBehaviour
     IEnumerator LoadScene()//ロードする
     {
         async = SceneManager.LoadSceneAsync("2Dmusic");
+
+        
 
 
         while (!async.isDone)

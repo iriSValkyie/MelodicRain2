@@ -9,63 +9,96 @@ public class GameMenu : MonoBehaviour
     [SerializeField] GameObject MenuCanvas;//リスタートや曲選択画面に戻ることができる
     [SerializeField] GameController gameController;
 
-    bool isOpen;
+    bool isOpen;//メニューを開いているか
+
+
+    public bool MusicStarted;//音楽が再生されて演奏が始まっているか
     // Start is called before the first frame update
     void Awake()
     {
-        MenuCanvas.SetActive(false);
+        
     }
-
+    private void Start()
+    {
+        isOpen =false;
+        MusicStarted =false;
+    }
     // Update is called once per frame
     void Update()
     {
-        OpenMenu();
-        CloseMenu();
-    }
 
+        if (MusicStarted)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+
+                isOpen = !isOpen;
+
+            }
+
+            switch (isOpen)
+            {
+
+                case true:
+
+                    OpenMenu();
+
+                    break;
+
+
+                case false:
+
+                    CloseMenu();
+
+                    break;
+
+
+            }
+
+        }
+
+    }
 
     void OpenMenu()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            
+     
+           
             isOpen = true;
-            gameController.music.Pause();
             MenuCanvas.SetActive(true);
+            gameController.music.Pause();
+            
 
-            Debug.Log("粋");
+           
 
             Time.timeScale = 0;
 
-        }
+     
 
     }
 
     void CloseMenu()
     {
-        if (isOpen)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (MenuCanvas.activeSelf == true)
-                {
-                    gameController.music.UnPause();
-                    MenuCanvas.SetActive(false);
-                    Time.timeScale = 1;
-                }
-            }
-        }
-
-
+        
+            gameController.music.UnPause();
+            MenuCanvas.SetActive(false);
+            Time.timeScale = 1;
+            
+      
     }
+
+    
 
     public void OnRestart()//メニューからリスタートする
     {
+      //  ReloadSong.isReload = true;
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+
+       
 
 
     }
@@ -74,7 +107,7 @@ public class GameMenu : MonoBehaviour
     public void OnBack()//メニューから曲選択に戻る
     {
 
-        SceneManager.LoadScene("SelectScene");
+        SceneManager.LoadScene("SelectMusic");
 
 
     }
@@ -82,7 +115,7 @@ public class GameMenu : MonoBehaviour
 
     public void OnResume()//演奏に戻る
     {
-
+        gameController.music.UnPause();
         MenuCanvas.SetActive(false);
         Time.timeScale = 1;
 

@@ -205,6 +205,8 @@ public class Note : MonoBehaviour
             judge.bad.SetAlpha(1);
             Destroy(gameObject);
             isBad = true;
+
+            judge.combo = 0;
         }
         //Debug.Log("オブジェクト削除");
         

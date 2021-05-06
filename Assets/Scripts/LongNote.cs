@@ -48,10 +48,18 @@ public class LongNote : MonoBehaviour
     void FixedUpdate()
     {
 
+        if (startnote == null)
+        {
+
+            
+        }
+        else
+        {
+            distance = endnote.anchoredPosition.y - startnote.anchoredPosition.y;//距離を計算
 
 
-        distance = endnote.anchoredPosition.y - startnote.anchoredPosition.y;//距離を計算
 
+        }
 
 
 

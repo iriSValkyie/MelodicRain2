@@ -224,14 +224,17 @@ public class LoadingSelectData : MonoBehaviour
 
 
 
-        
+        Debug.Log("スタートこるーちン終了");
 
         StartCoroutine("FadeIn");
     }
 
     IEnumerator FadeIn()
     {
-        for(var i = 1f; i >= 0; i -= 0.1f)
+
+        Debug.Log("フェードインコルーチン開始" + fadeinTime);
+
+        for(float i = 1f; i >= 0; i -= 0.1f)
         {
             backgroundimage.color = new Color(0f, 0f, 0f, i);
 
@@ -239,12 +242,15 @@ public class LoadingSelectData : MonoBehaviour
 
         }
 
+        yield return null;
+
+
 
         Panel.SetActive(false);
 
         animator.SetTrigger("isReady");//readyのアニメーションを再生
 
-        StopCoroutine("FadeIn");
+        
 
     }
 
