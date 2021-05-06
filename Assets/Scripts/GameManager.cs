@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
 
   
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        Application.targetFrameRate = 120;//フレームレートを設定
+        Application.targetFrameRate =60;//フレームレートを設定
     }
 
     // Update is called once per frame

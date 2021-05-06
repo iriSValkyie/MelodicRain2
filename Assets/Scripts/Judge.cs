@@ -113,7 +113,7 @@ public class Judge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Debug.Log(Application.targetFrameRate);
         nowFrameRate = Application.targetFrameRate;
 
         oneframe = 1 / (float)nowFrameRate;

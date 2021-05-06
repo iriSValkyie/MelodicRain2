@@ -6,16 +6,9 @@ using System.Linq;
 public class SelectMusic : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    [Header("他スクリプト")]
     [SerializeField] GenerateSongPref generateSongPref;
     [SerializeField] ReadingSongsFolder readingSongsFolder;
-
-    [SerializeField] ToggleGroup MusictoggleGroup;
-
-    bool isUp;
-    bool isDown;
-    bool isLeft;
-    bool isRight;
 
     [SerializeField] LaneToggle laneToggle;
 
@@ -23,12 +16,25 @@ public class SelectMusic : MonoBehaviour
 
     [SerializeField] SpeedSelect speedSelect;
 
+
+
+    bool isUp;
+    bool isDown;
+    bool isLeft;
+    bool isRight;
+
+    [Header("曲トグル")]
+
+    [SerializeField] ToggleGroup MusictoggleGroup;
+
+    [Header("背景明るさ")]
     [SerializeField] Slider BrightnessSelecter;
 
+    [Header("難易度トグル")]
     [SerializeField] Toggle[] DifficultyToggle = new Toggle[4];
 
 
-    MusicDataBase[] musicDataBases;
+
 
     [SerializeField] Texture2D[] texture2D;
 

@@ -133,7 +133,7 @@ public class LoadingSelectData : MonoBehaviour
 
 
         /*音楽の取得*/
-        if (System.IO.File.Exists(MusicFilePath.Replace("file://", "") + ".wav"))
+        if (System.IO.File.Exists(MusicFilePath.Replace("file://", "") + ".wav"))//ファイルが存在しているかの確認
         {
             using (unityWebRequest = UnityWebRequestMultimedia.GetAudioClip(MusicFilePath + ".wav", AudioType.WAV))
             {
@@ -170,7 +170,7 @@ public class LoadingSelectData : MonoBehaviour
         {
             Debug.LogError("ジャケットファイルのパスが間違っています、PLayPrefsのキーなどを確認してください");
 
-            JacketBackGrond.texture = Resources.Load<Texture2D>("Default");
+            JacketBackGrond.texture = Resources.Load<Texture2D>("Default");//初期ジャケットを取得
             Jacket.texture = Resources.Load<Texture2D>("Default");
 
         }
