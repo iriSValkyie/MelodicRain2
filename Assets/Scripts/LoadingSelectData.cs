@@ -80,7 +80,7 @@ public class LoadingSelectData : MonoBehaviour
 
     [SerializeField] Player player;
 
-
+    [SerializeField] Fade fade;
 
     [Header("各コンポーネント")]
 
@@ -226,34 +226,36 @@ public class LoadingSelectData : MonoBehaviour
 
         Debug.Log("スタートこるーちン終了");
 
-        StartCoroutine("FadeIn");
+        fade.FadeIn(0.5f);
+        animator.SetTrigger("isReady");//readyのアニメーションを再生
+                                       //  StartCoroutine("FadeIn");
     }
 
-    IEnumerator FadeIn()
+    /*IEnumerator FadeIn()
     {
 
-        Debug.Log("フェードインコルーチン開始" + fadeinTime);
+                Debug.Log("フェードインコルーチン開始" + fadeinTime);
 
-        for(float i = 1f; i >= 0; i -= 0.1f)
-        {
-            backgroundimage.color = new Color(0f, 0f, 0f, i);
+                for(float i = 1f; i >= 0; i -= 0.1f)
+                {
+                    backgroundimage.color = new Color(0f, 0f, 0f, i);
 
-            yield return new WaitForSeconds(fadeinTime);
+                    yield return new WaitForSeconds(fadeinTime);
 
-        }
+                }
 
-        yield return null;
+                yield return null;
 
 
 
-        Panel.SetActive(false);
+                Panel.SetActive(false);
 
-        animator.SetTrigger("isReady");//readyのアニメーションを再生
+                animator.SetTrigger("isReady");//readyのアニメーションを再生
 
-        
 
-    }
 
+   }
+      */
 
 
     public void OnStart()

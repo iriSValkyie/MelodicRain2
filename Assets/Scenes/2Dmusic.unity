@@ -262,8 +262,9 @@ GameObject:
   - component: {fileID: 83485053}
   - component: {fileID: 83485055}
   - component: {fileID: 83485054}
+  - component: {fileID: 83485056}
   m_Layer: 5
-  m_Name: FadeOut
+  m_Name: FadeOutInManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -325,6 +326,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83485052}
   m_CullTransparentMesh: 0
+--- !u!114 &83485056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83485052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc52e6df32cd14346951eda4a9c91ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeImage: {fileID: 83485054}
 --- !u!1 &137265227
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &243922454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3813,8 +3827,7 @@ MonoBehaviour:
   gameController: {fileID: 1113957616}
   judge: {fileID: 1113957621}
   audio: {fileID: 1113957618}
-  background: {fileID: 83485054}
-  fadeinTime: 3
+  fade: {fileID: 0}
   isPlaying: 0
 --- !u!114 &1113957624
 MonoBehaviour:
@@ -3831,6 +3844,7 @@ MonoBehaviour:
   MenuCanvas: {fileID: 598545572}
   gameController: {fileID: 1113957616}
   MusicStarted: 0
+  fade: {fileID: 83485056}
 --- !u!1 &1253840022
 GameObject:
   m_ObjectHideFlags: 0
@@ -5538,6 +5552,7 @@ MonoBehaviour:
   GameManager: {fileID: 1113957613}
   gameController: {fileID: 1113957616}
   player: {fileID: 1113957619}
+  fade: {fileID: 83485056}
   BrightnessImage: {fileID: 672064328}
   Jacket: {fileID: 592842349}
   JacketBackGrond: {fileID: 2032174374}

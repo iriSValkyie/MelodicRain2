@@ -13,6 +13,8 @@ public class GameMenu : MonoBehaviour
 
 
     public bool MusicStarted;//音楽が再生されて演奏が始まっているか
+
+   
     // Start is called before the first frame update
     void Awake()
     {
@@ -92,13 +94,14 @@ public class GameMenu : MonoBehaviour
 
     public void OnRestart()//メニューからリスタートする
     {
-      //  ReloadSong.isReload = true;
+        //  ReloadSong.isReload = true;
 
-
-
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-
+        isOpen = false;
+        Time.timeScale = 1;
        
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        
+
 
 
     }
@@ -107,14 +110,18 @@ public class GameMenu : MonoBehaviour
     public void OnBack()//メニューから曲選択に戻る
     {
 
+        isOpen = false; 
+        Time.timeScale = 1;
+       
         SceneManager.LoadScene("SelectMusic");
-
+        
 
     }
 
 
     public void OnResume()//演奏に戻る
     {
+        isOpen = false; 
         gameController.music.UnPause();
         MenuCanvas.SetActive(false);
         Time.timeScale = 1;

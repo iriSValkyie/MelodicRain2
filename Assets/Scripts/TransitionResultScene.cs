@@ -17,10 +17,10 @@ public class TransitionResultScene : MonoBehaviour
     [Header("音楽")]
     [SerializeField] AudioSource audio;
     [Header("フェードアウト")]
-    [SerializeField] Image background;
+    // [SerializeField] Image background;
 
-
-    [SerializeField] float fadeinTime;
+    [SerializeField] Fade fade;
+  //  [SerializeField] float fadeinTime;
 
 
 
@@ -32,13 +32,13 @@ public class TransitionResultScene : MonoBehaviour
      // Start is called before the first frame update
     void Start()
     {
-        isFadeOut = false;
+        //isFadeOut = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isFadeOut)
+       /* if (isFadeOut)
         {
 
              speed = speed + fadeinTime * Time.deltaTime;
@@ -51,6 +51,7 @@ public class TransitionResultScene : MonoBehaviour
 
             }
         }
+       */
     }
 
     private void LateUpdate()
@@ -58,9 +59,9 @@ public class TransitionResultScene : MonoBehaviour
 
         if (audio.time == 0 && !audio.isPlaying && isPlaying)//演奏が終了するとリザルトシーンへの遷移のためにフェードアウトを実行
         {
-            isFadeOut = true;
+            fade.FadeOut(2);
 
-
+            Finish();
         }
 
     }
@@ -89,7 +90,7 @@ public class TransitionResultScene : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        fadeinTime = 1f * fadeinTime / 10f;
+        //fadeinTime = 1f * fadeinTime / 10f;
 
 
         SceneManager.LoadScene("ResultScene");
