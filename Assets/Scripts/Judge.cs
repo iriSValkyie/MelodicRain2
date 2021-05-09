@@ -15,10 +15,10 @@ public class Judge : MonoBehaviour
 
 
     /*キー*/
-    string tapkey1 = "d";
-    string tapkey2 = "f";
-    string tapkey3 = "h";
-    string tapkey4 = "j";
+    string tapkey1;
+    string tapkey2;
+    string tapkey3;
+    string tapkey4;
 
     [Header("Combo")]
 
@@ -153,9 +153,13 @@ public class Judge : MonoBehaviour
         ResetAlpha();
 
 
-        
+        tapkey1 = player.Rane1Key;
 
-        
+        tapkey2 = player.Rane2Key;
+
+        tapkey3 = player.Rane3Key;
+
+        tapkey4 = player.Rane4Key;
 
         
     }

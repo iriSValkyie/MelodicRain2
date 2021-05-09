@@ -47,6 +47,7 @@ public class Fade : MonoBehaviour
                 isFadein = false;
 
                 Debug.Log("フェード終了");
+                FadeImage.gameObject.SetActive(false);
                
             }
 
@@ -65,8 +66,8 @@ public class Fade : MonoBehaviour
                 isFadeout = false;
 
                 Debug.Log("フェード終了");
+                FadeImage.gameObject.SetActive(false);
 
-               
             }
 
             FadeImage.color = new Color(0, 0, 0, alpha);
@@ -78,7 +79,7 @@ public class Fade : MonoBehaviour
 
     public void FadeIn(float time)
     {
-
+        FadeImage.gameObject.SetActive(true);
 
         fadetime = time;
 
@@ -92,6 +93,8 @@ public class Fade : MonoBehaviour
 
     public void FadeOut(float time)
     {
+        FadeImage.gameObject.SetActive(true);
+
         fadetime = time;
 
         alpha = 0;

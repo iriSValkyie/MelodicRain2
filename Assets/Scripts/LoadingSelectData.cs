@@ -26,8 +26,9 @@ public class LoadingSelectData : MonoBehaviour
 
     [Header("Readyアニメーション")]
 
-    [SerializeField] Animator animator;
+    [SerializeField] Animator Readyanimator;
 
+    [SerializeField] Animator Oparationanimator;
 
     [Header("音楽")]
 
@@ -227,8 +228,9 @@ public class LoadingSelectData : MonoBehaviour
         Debug.Log("スタートこるーちン終了");
 
         fade.FadeIn(0.5f);
-        animator.SetTrigger("isReady");//readyのアニメーションを再生
-                                       //  StartCoroutine("FadeIn");
+
+        Readyanimator.SetTrigger("isReady");//readyのアニメーションを再生
+        Oparationanimator.SetTrigger("isAnimation");  //操作方法を表示するアニメーションを再生
     }
 
     /*IEnumerator FadeIn()
