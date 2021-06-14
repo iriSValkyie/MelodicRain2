@@ -7,24 +7,7 @@ using UnityEngine;
 public class Score
 {
     public int Just =0;
-
-
     public int Great =0;
-
-
     public int Good = 0;
-
-
-
     public int Bad =0;
-
-
-
-
-
-
-
-
-
-
 }
