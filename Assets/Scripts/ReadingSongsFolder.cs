@@ -34,7 +34,7 @@ public class ReadingSongsFolder : MonoBehaviour
     [Header("UI関係")]
         
         public string UIPath;
-        public Texture2D[] RaneCovorIcon = new Texture2D[4]; 
+        public Texture2D[] RaneCovorIcon = new Texture2D[5]; 
     IEnumerator Start()
     {
         SelectManager.SetActive(false);

@@ -35,7 +35,7 @@ public class Fade : MonoBehaviour
             }
             FadeImage.color = new Color(0, 0, 0, alpha);
         }
-        else if (isFadeout)
+        if (isFadeout)
         {
             alpha += Time.deltaTime / fadetime;
             Debug.Log(alpha);
@@ -43,7 +43,7 @@ public class Fade : MonoBehaviour
             {
                 isFadeout = false;
                 Debug.Log("フェード終了");
-                FadeImage.gameObject.SetActive(false);
+                
             }
             FadeImage.color = new Color(0, 0, 0, alpha);
         }
@@ -55,7 +55,7 @@ public class Fade : MonoBehaviour
         alpha = 1;
         
         isFadein = true;
-        Debug.Log("フェード開始" );
+        Debug.Log("フェードイン開始" );
         Debug.Log("初期:" + alpha);
        
     }
@@ -65,7 +65,7 @@ public class Fade : MonoBehaviour
         fadetime = time;
         alpha = 0;
         isFadeout = true;
-        Debug.Log("フェード開始" );
+        Debug.Log("フェードアウト開始" );
         Debug.Log("初期:" + alpha);
     }
     

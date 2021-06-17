@@ -32,7 +32,7 @@ public class TransitionResultScene : MonoBehaviour
     {
         if (audio.time == 0 && !audio.isPlaying && isPlaying)//演奏が終了するとリザルトシーンへの遷移のためにフェードアウトを実行
         {
-            fade.FadeOut(2);
+            fade.FadeOut(0.5f);
             Finish();
         }
     }
@@ -47,9 +47,8 @@ public class TransitionResultScene : MonoBehaviour
         PlayerPrefs.SetInt("Score", judge.Score);
         PlayerPrefs.SetInt("Combo", judge.Maxcombo);
         PlayerPrefs.Save();
-        //fadeinTime = 1f * fadeinTime / 10f;
         SceneManager.LoadScene("ResultScene");
-        //  StartCoroutine(FadeOut());
+    
     }
     
     

@@ -5,13 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 public class ResultManager : MonoBehaviour
-{       
+{
     [Header("フェードイン/アウト用")]
-    [SerializeField] Image backgroundimage; //フェード用のImageComponent
-    
-    float time;//フェード残り時間
-    [SerializeField] bool isFadein;//フェードイン用のbool
-    [SerializeField] bool isFadeOut;//フェードアウト用
+    [SerializeField] Fade fade;
     [Header("スコア類")]
     [SerializeField] int Score;
     [SerializeField] string Difficult;
@@ -44,11 +40,10 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isFadein = false;
-        time = 1;
+        
         GetScore();
         WriteScore();
-        isFadein = true;
+        
         StartCoroutine(GetJacket());
     }
     IEnumerator GetJacket()
@@ -59,7 +54,7 @@ public class ResultManager : MonoBehaviour
             {
                 yield return unityWebRequest.SendWebRequest();
                 Jacket.texture = ((DownloadHandlerTexture)unityWebRequest.downloadHandler).texture;
-                
+                fade.FadeIn(0.5f);
             }
         }
     }
@@ -138,41 +133,26 @@ public class ResultManager : MonoBehaviour
     }
     void Update()
     {
-        FadeIn();
+        
         if (Input.GetKeyDown(KeyCode.Return))//エンターを押すと次のシーンへ進むためフェードアウトする
         {
-            isFadeOut = true;
+            fade.FadeOut(0.5f);
+            Invoke("NextScene", 0.5f);
+           
         }
-        FadeOut();
+       
     }
-    void FadeOut()
-    {
-        if (isFadeOut)
-        {
-            time += Time.deltaTime;
-            backgroundimage.color = new Color(0, 0, 0, time);
-            if (backgroundimage.color.a >= 1)
-            {
-                SceneManager.LoadScene("SelectMusic");
-            }
-        }
-    }
-    void FadeIn()
-    {
-        if (isFadein)
-        {
-            time -= Time.deltaTime;
-            backgroundimage.color = new Color(0, 0, 0, time);
-            if (backgroundimage.color.a <= 0)
-            {
-                isFadein = false;
-            }
-        }
-    }
+   
     public void OnClickNext()
     {
-        isFadeOut = true;
-       
+        fade.FadeOut(0.5f);
+        Invoke("NextScene", 0.5f);
+    }
+
+
+    void NextScene()
+    {
+        SceneManager.LoadScene("SelectMusic");
     }
     // Update is called once per frame
 }
