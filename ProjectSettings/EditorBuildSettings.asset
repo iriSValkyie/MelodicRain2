@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SelectMusic.unity
+    path: Assets/OldMelodicRain/Scenes/SelectMusic.unity
     guid: 735264f1cd8aca74d84d0d799ef8fdd4
   - enabled: 1
-    path: Assets/Scenes/2Dmusic.unity
+    path: Assets/OldMelodicRain/Scenes/2Dmusic.unity
     guid: 336be87453648e24989e9897ef07bb30
   - enabled: 1
-    path: Assets/Scenes/ResultScene.unity
+    path: Assets/OldMelodicRain/Scenes/ResultScene.unity
     guid: 3a0afdfa017a7994aaaa4bf28042f1c3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: f23cf9a5b72de38479da1741bf180967,
