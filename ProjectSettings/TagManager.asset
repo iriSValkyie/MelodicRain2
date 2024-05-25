@@ -59,3 +59,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: OverrayEffects
+    uniqueID: 2971927451
+    locked: 0
+  - name: OverrayUI
+    uniqueID: 1992812649
+    locked: 0
